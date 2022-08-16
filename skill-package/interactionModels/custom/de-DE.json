@@ -1,0 +1,69 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "stimmen scanner",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "HelloWorldIntent",
+          "slots": [],
+          "samples": [
+            "hallo",
+            "wie geht\u0027s dir",
+            "sag hallo welt",
+            "sag hallo"
+          ]
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.FallbackIntent",
+          "samples": []
+        },
+        {
+          "name": "StartIntent",
+          "slots": [],
+          "samples": [
+            "starte Scanner",
+            "starte mit Scannen",
+            "beginne mit Scannen",
+            "starte Scannen",
+            "start"
+          ]
+        },
+        {
+          "name": "AddPageIntent",
+          "slots": [],
+          "samples": [
+            "füge eine Seite hinzu",
+            "Seiten hinzufügen",
+            "Seite hinzufügen"
+          ]
+        },
+        {
+          "name": "SavePagesIntent",
+          "slots": [],
+          "samples": [
+            "speichern",
+            "Seiten speichern"
+          ]
+        }
+      ],
+      "types": []
+    }
+  },
+  "version": "3"
+}

@@ -10,7 +10,7 @@ const LaunchRequestHandler = {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest';
     },
     handle(handlerInput) {
-        const speakOutput = 'Willkommen beim Stimmen Scanner. Du kannst sagen: starte Scanner oder Hilfe. Was möchtest du?';
+        const speakOutput = 'Willkommen beim Stimmen Scanner. Du kannst sagen: starte Scanner oder Hilfe. Was möchtest du? kek';
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
