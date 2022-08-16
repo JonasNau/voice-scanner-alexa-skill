@@ -1,4 +1,3 @@
-try {
 /* *
  * This sample demonstrates handling intents from an Alexa skill using the Alexa Skills Kit SDK (v2).
  * Please visit https://alexa.design/cookbook for additional examples on implementing slots, dialog management,
@@ -131,7 +130,7 @@ const ErrorHandler = {
     },
     handle(handlerInput, error) {
         const speakOutput = `Sorry, I had trouble doing what you asked. Please try again. ${JSON.stringify(error)}`;
-        console.log(`~~~~ Error handled: ${JSON.stringify(error)}`);
+        console.dir(`~~~~ Error handled: ${JSON.stringify(error)}`);
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
@@ -245,7 +244,3 @@ exports.handler = Alexa.SkillBuilders.custom()
         ErrorHandler)
     .withCustomUserAgent('sample/voice-scanner/v1.0')
     .lambda();
-} catch (e) {
-    console.log(e);
-}
-
