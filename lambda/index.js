@@ -130,7 +130,7 @@ const ErrorHandler = {
     },
     handle(handlerInput, error) {
         const speakOutput = `Sorry, I had trouble doing what you asked. Please try again. ${JSON.stringify(error)}`;
-        console.dir(`~~~~ Error handled: ${JSON.stringify(error)}`);
+        console.dir(`~~~~ Error handled: ${error.message}`);
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
