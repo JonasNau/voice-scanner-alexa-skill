@@ -44,7 +44,7 @@ const HelpIntentHandler = {
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
-            //.reprompt(speakOutput)
+            .reprompt(speakOutput)
             .getResponse();
     }
 };
