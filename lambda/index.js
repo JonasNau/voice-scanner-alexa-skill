@@ -126,7 +126,7 @@ const ErrorHandler = {
         return true;
     },
     handle(handlerInput, error) {
-        const speakOutput = 'Sorry, I had trouble doing what you asked. Please try again.';
+        const speakOutput = `Sorry, I had trouble doing what you asked. Please try again. ${JSON.stringify(error)}`;
         console.log(`~~~~ Error handled: ${JSON.stringify(error)}`);
 
         return handlerInput.responseBuilder
@@ -144,8 +144,11 @@ const YesIntentHandler = {
         && handlerInput.attributesManager.getSessionAttributes().questionAsked === 'DoYouWantToAddAPage';
     },
     handle(handlerInput) {
+
+        let speakOutput = "Du möchtest also eine Seite hinzufügen";
+
         return handlerInput.responseBuilder
-        .speak(handlerInput.t("Du möchtest also eine Seite hinzufügen"))
+        .speak(speakOutput)
         .reprompt(speakOutput)
         .getResponse();
     }
