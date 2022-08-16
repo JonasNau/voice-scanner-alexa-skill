@@ -167,11 +167,12 @@ const YesIntentHandler2 = {
     handle(handlerInput) {
         setQuestion(handlerInput, null);
 
+
         let speakOutput = "Du hast ja geantwortet";
 
         return handlerInput.responseBuilder
         .speak(speakOutput)
-        .reprompt(speakOutput)
+        .reprompt(speakOutputFAIL)
         .getResponse();
     }
 }
