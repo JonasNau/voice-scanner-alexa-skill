@@ -10,7 +10,7 @@ const LaunchRequestHandler = {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest';
     },
     handle(handlerInput) {
-        const speakOutput = 'Willkommen beim Stimmen Scanner. Du kannst sagen: starte Scanner oder Hilfe. Was möchtest du?';
+        const speakOutput = 'Willkommen beim Stimmen Scanner. Du kannst sagen: "starte Scanner" oder Hilfe. Was möchtest du?';
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
@@ -44,7 +44,7 @@ const HelpIntentHandler = {
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
-            .reprompt("Test")
+            .reprompt(speakOutput)
             .getResponse();
     }
 };
@@ -135,6 +135,63 @@ const ErrorHandler = {
             .getResponse();
     }
 };
+
+
+const YesIntentHandler = {
+    canHandle(handlerInput) {
+        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
+        && Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.YesIntent'
+        && handlerInput.attributesManager.getSessionAttributes().questionAsked === 'DoYouWantToAddAPage';
+    },
+    handle(handlerInput) {
+        return handlerInput.responseBuilder
+        .speak(handlerInput.t("Du möchtest also eine Seite hinzufügen"))
+        .reprompt(speakOutput)
+        .getResponse();
+    }
+}
+
+const NoIntentHandler = {
+    canHandle(handlerInput) {
+        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
+            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.NoIntent'
+            && handlerInput.attributesManager.getSessionAttributes().questionAsked === 'DoYouWantToAddAPage';
+    },
+    handle(handlerInput) {
+        return handlerInput.responseBuilder
+        .speak(handlerInput.t("Du möchtest also keine Seite hinzufügen"))
+        .reprompt(speakOutput)
+        .getResponse();
+    }
+}
+
+
+const AddPageIntentHandler = {
+    canHandle(handlerInput) {
+        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
+            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'AddPageIntent';
+    },
+    handle(handlerInput) {
+        const speakOutput = handlerInput.t('Willst du eine Seite hinzufügen?');
+        setQuestion(handlerInput, 'DoYouWantToAddAPage');
+        return handlerInput.responseBuilder
+            .speak(speakOutput)
+            .reprompt(speakOutput)
+            .getResponse();
+    }
+};
+
+function setQuestion(handlerInput, questionAsked) {
+    const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+    sessionAttributes.questionAsked = questionAsked;
+    handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+}
+
+
+
+
+
+
 
 /**
  * This handler acts as the entry point for your skill, routing all request and response
