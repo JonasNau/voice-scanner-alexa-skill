@@ -172,11 +172,10 @@ const AddPageIntentHandler = {
             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'AddPageIntent';
     },
     handle(handlerInput) {
-        const speakOutput = handlerInput.t('Willst du eine Seite hinzufügen?');
         // setQuestion(handlerInput, null);
         // setQuestion(handlerInput, 'DoYouWantToAddAPage');
         return handlerInput.responseBuilder
-            .speak(speakOutput)
+            .speak('Willst du eine Seite hinzufügen?')
             .reprompt(speakOutput)
             .getResponse();
     }
