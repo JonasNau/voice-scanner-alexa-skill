@@ -1,3 +1,4 @@
+try {
 /* *
  * This sample demonstrates handling intents from an Alexa skill using the Alexa Skills Kit SDK (v2).
  * Please visit https://alexa.design/cookbook for additional examples on implementing slots, dialog management,
@@ -18,7 +19,7 @@ const LaunchRequestHandler = {
             .getResponse();
     }
 };
-
+//Hallo Welt - Test
 const HelloWorldIntentHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
@@ -34,6 +35,7 @@ const HelloWorldIntentHandler = {
     }
 };
 
+//Hilfe
 const HelpIntentHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
@@ -48,7 +50,7 @@ const HelpIntentHandler = {
             .getResponse();
     }
 };
-
+//Stop / Abbrechen
 const CancelAndStopIntentHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
@@ -56,13 +58,15 @@ const CancelAndStopIntentHandler = {
                 || Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.StopIntent');
     },
     handle(handlerInput) {
-        const speakOutput = 'Goodbye!';
+        const speakOutput = 'Tschau!';
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
             .getResponse();
     }
 };
+
+//Nichts verstanden
 /* *
  * FallbackIntent triggers when a customer says something that doesn’t map to any intents in your skill
  * It must also be defined in the language model (if the locale supports it)
@@ -74,7 +78,7 @@ const FallbackIntentHandler = {
             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.FallbackIntent';
     },
     handle(handlerInput) {
-        const speakOutput = 'Sorry, I don\'t know about that. Please try again.';
+        const speakOutput = 'Diesen Befehl kann "Stimmen Scanner" nicht verarbeiten. Falls du Hilfe brauchst, sage "Hilfe"';
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
@@ -240,3 +244,7 @@ exports.handler = Alexa.SkillBuilders.custom()
         ErrorHandler)
     .withCustomUserAgent('sample/voice-scanner/v1.0')
     .lambda();
+} catch (e) {
+    console.log(e);
+}
+
