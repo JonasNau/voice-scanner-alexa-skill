@@ -144,6 +144,7 @@ const YesIntentHandler = {
         && handlerInput.attributesManager.getSessionAttributes().questionAsked === 'DoYouWantToAddAPage';
     },
     handle(handlerInput) {
+        setQuestion(handlerInput, null);
 
         let speakOutput = "Du möchtest also eine Seite hinzufügen";
 
@@ -160,6 +161,7 @@ const YesIntentHandler2 = {
         && Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.YesIntent'
     },
     handle(handlerInput) {
+        setQuestion(handlerInput, null);
 
         let speakOutput = "Du hast ja geantwortet";
 
@@ -177,6 +179,7 @@ const NoIntentHandler = {
             && handlerInput.attributesManager.getSessionAttributes().questionAsked === 'DoYouWantToAddAPage';
     },
     handle(handlerInput) {
+        setQuestion(handlerInput, null);
 
         let speakOutput = "Du möchtest also keine Seite hinzufügen";
 
@@ -195,7 +198,6 @@ const AddPageIntentHandler = {
     },
     handle(handlerInput) {
         let speakOutput = 'Willst du eine Seite hinzufügen?';
-        setQuestion(handlerInput, null);
         setQuestion(handlerInput, 'DoYouWantToAddAPage');
         return handlerInput.responseBuilder
             .speak(speakOutput)
