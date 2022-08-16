@@ -151,6 +151,19 @@ const YesIntentHandler = {
     }
 }
 
+const YesIntentHandler2 = {
+    canHandle(handlerInput) {
+        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
+        && Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.YesIntent'
+    },
+    handle(handlerInput) {
+        return handlerInput.responseBuilder
+        .speak(handlerInput.t("Du hast ja geantwortet"))
+        .reprompt(speakOutput)
+        .getResponse();
+    }
+}
+
 const NoIntentHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
@@ -173,8 +186,8 @@ const AddPageIntentHandler = {
     },
     handle(handlerInput) {
         let speakOutput = 'Willst du eine Seite hinzufügen?';
-        // setQuestion(handlerInput, null);
-        // setQuestion(handlerInput, 'DoYouWantToAddAPage');
+        setQuestion(handlerInput, null);
+        setQuestion(handlerInput, 'DoYouWantToAddAPage');
         return handlerInput.responseBuilder
             .speak(speakOutput)
             .reprompt(speakOutput)
@@ -209,6 +222,7 @@ exports.handler = Alexa.SkillBuilders.custom()
         SessionEndedRequestHandler,
         AddPageIntentHandler,
         YesIntentHandler,
+        YesIntentHandler2,
         NoIntentHandler,
         IntentReflectorHandler)
     .addErrorHandlers(
