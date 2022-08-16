@@ -10,7 +10,7 @@ const LaunchRequestHandler = {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest';
     },
     handle(handlerInput) {
-        const speakOutput = 'Welcome, you can say Hello or Help. Which would you like to try?';
+        const speakOutput = 'Willkommen beim Stimmen Scanner. Du kannst sagen: starte Scanner oder Hilfe. Was möchtest du?';
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
@@ -152,5 +152,5 @@ exports.handler = Alexa.SkillBuilders.custom()
         IntentReflectorHandler)
     .addErrorHandlers(
         ErrorHandler)
-    .withCustomUserAgent('sample/hello-world/v1.2')
+    .withCustomUserAgent('sample/voice-scanner/v1.0')
     .lambda();
