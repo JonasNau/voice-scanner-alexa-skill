@@ -124,7 +124,7 @@ const LaunchRequestHandler = {
     const speakOutput = result.message;
     */
 
-    const speakOutput = 'Willkommen beim Stimmen Scanner. Du kannst beispielsweise sagen: "starte Scanner" oder "Hilfe". Was möchtest du? 0';
+    const speakOutput = 'Willkommen beim Stimmen Scanner. Du kannst beispielsweise sagen: "starte Scanner" oder "Hilfe". Was möchtest du? 1';
 
     return handlerInput.responseBuilder
       .speak(speakOutput)
@@ -145,11 +145,14 @@ const AllIntentHandler = {
   async handle(handlerInput) {
 
 
-    const speakOutput = ` Here is a number <w role="amazon:VBD">read</w>
-    as a cardinal number:
-    <say-as interpret-as="cardinal">12345</say-as>.
-    Here is a word spelled out:
-    <say-as interpret-as="spell-out">hello</say-as>.`;
+    // const speakOutput = ` Here is a number <w role="amazon:VBD">read</w>
+    // as a cardinal number:
+    // <say-as interpret-as="cardinal">12345</say-as>.
+    // Here is a word spelled out:
+    // <say-as interpret-as="spell-out">hello</say-as>.`;
+
+
+    const speakOutput = `Here is some audio: <audio src="./src/test.mp3"> Audio Ende.`;
 
     return (
       handlerInput.responseBuilder
