@@ -124,7 +124,7 @@ const LaunchRequestHandler = {
     const speakOutput = result.message;
     */
 
-    const speakOutput = 'Willkommen beim Stimmen Scanner. Du kannst beispielsweise sagen: "starte Scanner" oder "Hilfe". Was möchtest du? 0';
+    const speakOutput = 'Willkommen beim Stimmen Scanner. Du kannst beispielsweise sagen: "starte Scanner" oder "Hilfe". Was möchtest du? 1';
 
     return handlerInput.responseBuilder
       .speak(speakOutput)
@@ -152,7 +152,7 @@ const AllIntentHandler = {
     // <say-as interpret-as="spell-out">hello</say-as>.`;
 
 
-    const speakOutput = `Here is some audio: <audio src='./src/test2.mp3'> Audio Ende.`;
+    const speakOutput = `Here is some audio: <audio src='https://eduquiz.ddns.net/media/api/test2.mp3'> Audio Ende.`;
 
     return (
       handlerInput.responseBuilder
