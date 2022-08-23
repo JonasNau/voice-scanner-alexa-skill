@@ -321,6 +321,11 @@ const LaunchRequestHandler = {
     );
   },
   async handle(handlerInput) {
+    return handlerInput.responseBuilder
+        .speak("Test")
+        .reprompt("Test2")
+        .getResponse();
+    // }
     //Initialisierte Voice Scanner
     // let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/18s.mp3'/>`;
     // await callDirectiveService(
@@ -328,18 +333,18 @@ const LaunchRequestHandler = {
     //   `v1 Willkommen beim Stimmen Scanner. Ich initialisiere den Scanner. ${audioFile}`
     // );
 
-    let result = {error: false, message: "Test"};
-    if (result.error) {
-      let speakOutput = `${result.message} Versuche es erneut.`;
-      return handlerInput.responseBuilder.speak(speakOutput).getResponse();
-    } else {
-      let speakOutput = `${result.message} Du kannst beispielsweise sagen: "seiteHinzufügen" oder "Hilfe". Möchtest du eine Seite hinzufügen?`;
-      setState(handlerInput, "SeiteHinzufuegengen");
-      return handlerInput.responseBuilder
-        .speak(speakOutput)
-        .reprompt(speakOutput)
-        .getResponse();
-    }
+    // let result = {error: false, message: "Test"};
+    // if (result.error) {
+    //   let speakOutput = `${result.message} Versuche es erneut.`;
+    //   return handlerInput.responseBuilder.speak(speakOutput).getResponse();
+    // } else {
+    //   let speakOutput = `${result.message} Du kannst beispielsweise sagen: "seiteHinzufügen" oder "Hilfe". Möchtest du eine Seite hinzufügen?`;
+    //   setState(handlerInput, "SeiteHinzufuegengen");
+    //   return handlerInput.responseBuilder
+    //     .speak(speakOutput)
+    //     .reprompt(speakOutput)
+    //     .getResponse();
+    // }
   },
 };
 
