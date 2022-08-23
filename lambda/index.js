@@ -137,7 +137,7 @@ const LaunchRequestHandler = {
 
     return handlerInput.responseBuilder
       .speak(speakOutput)
-      .reprompt(`Willkommen beim Stimmen Scanner. Du kannst beispielsweise sagen: "seiteHinzufügen" oder "Hilfe".` + voiceScannerClient.getcurrentResult()?.message)
+      .reprompt(`Willkommen beim Stimmen Scanner. Du kannst beispielsweise sagen: "seiteHinzufügen" oder "Hilfe".` + JSON.stringify(voiceScannerClient.getcurrentResult()))
       .getResponse();
   },
 };
