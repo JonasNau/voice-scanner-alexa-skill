@@ -152,7 +152,7 @@ const AllIntentHandler = {
     // <say-as interpret-as="spell-out">hello</say-as>.`;
 
 
-    const speakOutput = `Here is some audio: <audio src="./src/test.mp3"> Audio Ende.`;
+    const speakOutput = `Here is some audio: <audio src='./src/test2.mp3'> Audio Ende.`;
 
     return (
       handlerInput.responseBuilder
