@@ -283,7 +283,7 @@ const LaunchRequestHandler = {
     //Initialisierte Voice Scanner
      let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/18s.mp3'/>`;
      try {
-      await callDirectiveService(handlerInput, `Willkommen beim Stimmen Scanner. Ich initialisiere den Scanner, dies dauert ca. 15 Sekunden. ${audioFile}`);
+      await callDirectiveService(handlerInput, `Willkommen beim Stimmen Scanner. Ich initialisiere den Scanner. ${audioFile}`);
      } catch (e) {
       console.error(e);
      }
@@ -296,6 +296,7 @@ const LaunchRequestHandler = {
       .getResponse();
     } else {
       speakOutput = `${result.message} Du kannst beispielsweise sagen: "seiteHinzufügen" oder "Hilfe". Möchtest du eine Seite hinzufügen?`;
+      setState(handlerInput, "SeiteHinzufuegengen")
       return handlerInput.responseBuilder
       .speak(speakOutput)
       .reprompt(speakOutput)
@@ -310,6 +311,34 @@ const LaunchRequestHandler = {
 };
 
 
+const AddPageIntentHandler = {
+  canHandle(handlerInput) {
+    return (
+      (Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" ) &&
+      (Alexa.getIntentName(handlerInput.requestEnvelope) === "AddPageIntent") || (handlerInput.attributesManager.getSessionAttributes().currentState === "SeiteHinzufuegengen" && Alexa.getIntentName(handlerInput.requestEnvelope) === "AMAZON.YesIntent")
+    );
+  },
+  handle(handlerInput) {
+    clearState(handlerInput);
+
+    if (!await voiceScannerClient.isAbleToScan()) {
+      let speakOutput = `Ein Fehler ist aufgetreten. ${voiceScannerClient.currentResult?.message ? voiceScannerClient.currentResult.message : "Versuche es erneut."}`;
+      return handlerInput.responseBuilder
+      .speak(speakOutput)
+      .reprompt(speakOutput)
+      .getResponse();
+    }
+    voiceScannerClient.addPage();
+    let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/30s.mp3'/>`;
+    let speakOutput = `Eine Seite wird gescannt. Dies kann bis zu 30 Sekunden dauern. ${audioFile}. Möchtest du eine weitere Seite hinzufügen?`;
+    setState(handlerInput, "SeiteHinzufuegengen")
+    return handlerInput.responseBuilder
+      .speak(speakOutput)
+      .reprompt(speakOutput)
+      .getResponse();
+  },
+};
+
 
 
 const AllIntentHandler = {
@@ -319,16 +348,7 @@ const AllIntentHandler = {
   );
   },
   async handle(handlerInput) {
-
-
-    // const speakOutput = ` Here is a number <w role="amazon:VBD">read</w>
-    // as a cardinal number:
-    // <say-as interpret-as="cardinal">12345</say-as>.
-    // Here is a word spelled out:
-    // <say-as interpret-as="spell-out">hello</say-as>.`;
-
-
-    const speakOutput = `Hello`;
+    const speakOutput = `Das habe ich nicht verstanden. Du kannst sagen "seiteHinzufügen" oder "Hilfe". Was möchtest du?`;
 
     return (
       handlerInput.responseBuilder
@@ -503,27 +523,10 @@ const StartIntentHandler = {
   },
 };
 
-const AddPageIntentHandler = {
-  canHandle(handlerInput) {
-    return (
-      Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" &&
-      Alexa.getIntentName(handlerInput.requestEnvelope) === "AddPageIntent"
-    );
-  },
-  handle(handlerInput) {
-    let speakOutput = "";
+
+//
 
 
-
-    //scannen
-    speakOutput = "Okay, eine Seite wird hinzugefügt.";
-    setQuestion(handlerInput, "DoYouWantToAddAPage");
-    return handlerInput.responseBuilder
-      .speak(speakOutput)
-      .reprompt(speakOutput)
-      .getResponse();
-  },
-};
 
 const RestartScannerIntent = {
   canHandle(handlerInput) {
@@ -546,14 +549,14 @@ const RestartScannerIntent = {
 function setState(handlerInput, state) {
   const sessionAttributes =
     handlerInput.attributesManager.getSessionAttributes();
-  sessionAttributes.questionAsked = questionAsked;
+  sessionAttributes.questionAsked = currentState;
   handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
 }
 
-function clearQuestion(handlerInput) {
+function clearState(handlerInput) {
   const sessionAttributes =
     handlerInput.attributesManager.getSessionAttributes();
-  sessionAttributes.questionAsked = null;
+  sessionAttributes.currentState = null;
   handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
 }
 
