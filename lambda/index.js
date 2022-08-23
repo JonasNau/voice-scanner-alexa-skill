@@ -198,6 +198,7 @@ class VoiceScannerClient {
     await this.updateStatus();
     if (!this.status) return false;
 
+    if (this.status.isScanning) return false;
     if (this.status.currentState == "initialized") return true;
     if (this.status.currentState == "ready") return true;
     return false;
