@@ -88,14 +88,14 @@ async function httpRequest(
         headers: {'auth-token': authToken},
       });
 
-      instance.request(options).then(async(response) => {
+      instance.request(options).then((response) => {
         //data, status, statusText, headers, config, request
         if (response.status > 399) {
           console.error(response)
           resolve({error: true, message: "Ein interner Fehler ist aufgetreten. Versuche es erneut."});
           return;
         }
-        if (await objectFunctions.makeJSON(response.data)) {
+        if (objectFunctions.makeJSON(response.data)) {
           let data = objectFunctions.makeJSON(response.data);
           if (data.error == true) {resolve({error: true, message: data.message}); return;};
           resolve(data);
