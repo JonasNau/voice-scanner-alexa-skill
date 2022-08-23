@@ -11,6 +11,61 @@ const objectFunctions = require("./includes/object-functions");
 
 const authToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiIzIiwidXVpZCI6ImM2OGNlZmJjLTIzNjQtNDhhYi1hMzkwLWFkNjcwY2E2ZWJmZCIsInVzZXJuYW1lIjoiSm9uYXMiLCJwYXNzd29yZCI6IiQyYSQxMCRwL0NIY3gyN1U1WjhpNEQ2M3l6bkVlaGc5Rno3Z0xiTjVHTzJuWFExODRLejVNbWFja0Y4VyIsImNyZWF0ZWQiOiJGcmkgQXVnIDE5IDIwMjIgMjA6MzY6NDEgR01UKzAyMDAgKE1pdHRlbGV1cm9ww6Rpc2NoZSBTb21tZXJ6ZWl0KSIsImxhc3RMb2dpbiI6bnVsbCwibGFzdFB3ZENoYW5nZSI6bnVsbCwiZ3JvdXBzIjpbImFkbWluIl0sInBlcm1pc3Npb25zIjp7fSwiaXNGb3JiaWRkZW5UbyI6W10sImV4cGlyZXMiOiJuZXZlciIsImlhdCI6MTY2MTE2ODQwMH0.lLARdA-oRfDlNzNS1wlhvAOQgLXPj1Mxyj333g9tXjM";
 
+class VoiceScannerClient {
+  constructor() {
+    this.isScanning = false;
+
+  }
+
+  async init() {
+    let dataToSend = {filename: "Dateiname", extension: "pdf"};
+    let dataString = JSON.stringify(dataToSend);
+    let response = await httpRequest({
+      url: "/init",
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+        "Content-Length": Buffer.byteLength(dataString),
+      },
+      timeout: 0, //Some requests recieve only after the scanner is done -> 20 Seconds should be enough
+      body: false,
+      params: false, //For Get Request
+      data: JSON.stringify(dataString)
+     });
+    
+    if (response === false) {
+      return {error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."};
+    }
+    if (response.error) {
+      return {error: true, message: response.message}
+    }
+
+    return {error: false, message: response.message};
+  }
+
+  clear() {
+
+  }
+
+  addPage() {
+
+  }
+
+  convertAndUpload() {
+
+  }
+
+  kill() {
+
+  }
+
+  numberOfPages() {
+
+  }
+
+}
+
+const voiceScannerClient = new VoiceScannerClient();
 
 async function httpRequest(
   options = {
@@ -74,61 +129,7 @@ const LaunchRequestHandler = {
   },
 };
 
-class VoiceScannerClient {
-  constructor() {
-    this.isScanning = false;
 
-  }
-
-  async init() {
-    let dataToSend = {filename: "Dateiname", extension: "pdf"};
-    let dataString = JSON.stringify(dataToSend);
-    let response = await httpRequest({
-      url: "/init",
-      method: "get",
-      headers: {
-        "Content-Type": "application/json",
-        "Content-Length": Buffer.byteLength(dataString),
-      },
-      timeout: 0, //Some requests recieve only after the scanner is done -> 20 Seconds should be enough
-      body: false,
-      params: false, //For Get Request
-      data: JSON.stringify(dataString)
-     });
-    
-    if (response === false) {
-      return {error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."};
-    }
-    if (response.error) {
-      return {error: true, message: response.message}
-    }
-
-    return {error: false, message: response.message};
-  }
-
-  clear() {
-
-  }
-
-  addPage() {
-
-  }
-
-  convertAndUpload() {
-
-  }
-
-  kill() {
-
-  }
-
-  numberOfPages() {
-
-  }
-
-}
-
-let voiceScannerClient = new VoiceScannerClient();
 
 
 const AllIntentHandler = {
