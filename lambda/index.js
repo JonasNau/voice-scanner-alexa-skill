@@ -282,6 +282,12 @@ const LaunchRequestHandler = {
     );
   },
   async handle(handlerInput) {
+
+    return handlerInput.responseBuilder
+      .speak("Hallo")
+      .reprompt("Hallo")
+      .getResponse();
+
     //Initialisierte Voice Scanner
      let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/18s.mp3'/>`;
      try {
