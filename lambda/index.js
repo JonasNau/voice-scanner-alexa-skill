@@ -137,6 +137,27 @@ const LaunchRequestHandler = {
 const AllIntentHandler = {
   canHandle(handlerInput) {
     return (
+      Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" && Alexa.getIntentName(handlerInput.requestEnvelope) === "AMAZON.FallbackIntent"
+  );
+  },
+  async handle(handlerInput) {
+  //  let result = await voiceScannerClient.init();
+
+    const speakOutput = "Test";//result.message;
+
+    return (
+      handlerInput.responseBuilder
+        .speak(speakOutput)
+        .reprompt(result.message)
+        .getResponse()
+    );
+  },
+};
+
+
+const FallbackIntent = {
+  canHandle(handlerInput) {
+    return (
       Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" || Alexa.getIntentName(handlerInput.requestEnvelope) === "AMAZON.FallbackIntent"
   );
   },
@@ -153,6 +174,7 @@ const AllIntentHandler = {
     );
   },
 };
+
 //Hilfe
 const HelpIntentHandler = {
   canHandle(handlerInput) {
