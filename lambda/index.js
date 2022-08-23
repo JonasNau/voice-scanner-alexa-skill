@@ -134,7 +134,7 @@ const LaunchRequestHandler = {
     const speakOutput = `Willkommen beim Stimmen Scanner. Du kannst beispielsweise sagen: "starte Scanner" oder "Hilfe". Ich initialisiere den Scanner. ${audioFile} 1`;
 
     return handlerInput.responseBuilder
-      .speak(speakOutput).speak("Reprompt")
+      .speak(speakOutput)
       .reprompt("Reprompt")
       .getResponse();
   },
