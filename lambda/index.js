@@ -130,7 +130,7 @@ const LaunchRequestHandler = {
     //Initialisierte Voice Scanner
 
 
-    /* voiceScannerClient.init(); */
+    voiceScannerClient.init()
 
     let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/test2.mp3'/>`;
     const speakOutput = `Willkommen beim Stimmen Scanner. Du kannst beispielsweise sagen: "starte Scanner" oder "Hilfe". Ich initialisiere den Scanner. ${audioFile} 1`;
@@ -392,8 +392,33 @@ function clearQuestion(handlerInput) {
  * defined are included below. The order matters - they're processed top to bottom
  * */
 
- exports.handler = function(event, context, callback) {
+
+// create a custom skill builder
+const skillBuilder = Alexa.SkillBuilders.custom();
+
+exports.handler = (event, context, callback) => {
+  // we need this so that async stuff will work better
   context.callbackWaitsForEmptyEventLoop = false
+
+  // set up the skill with the new context
+  return skillBuilder
+    .addRequestHandlers(
+      LaunchRequestHandler,
+      HelloWorldIntentHandler,
+      HelpIntentHandler,
+      CancelAndStopIntentHandler,
+      SessionEndedRequestHandler,
+      AddPageIntentHandler,
+      AllIntentHandler
+    )
+    .addRequestInterceptors(LocalizationInterceptor)
+    .addErrorHandlers(ErrorHandler)
+    .withCustomUserAgent("jonas/voice-scanner/v1.0")
+    .lambda()(event, context, callback);
+}
+
+ exports.handler = function(event, context, callback) {
+  context.callbackWaitsForEmptyEventLoop = false;
  }
  
 
