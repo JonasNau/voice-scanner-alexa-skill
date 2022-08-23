@@ -625,9 +625,9 @@ exports.handler = (event, context, callback) => {
       AddPageIntentHandler,
       AllIntentHandler
     )
-    .withApiClient(new Alexa.DefaultApiClient())
-    .addErrorHandlers(ErrorHandler)
     .addRequestInterceptors(LocalizationInterceptor)
+    .addErrorHandlers(ErrorHandler)
+    .withApiClient(new Alexa.DefaultApiClient())
     .withCustomUserAgent("jonas/voice-scanner/v1.0")
     .lambda()(event, context, callback);
 };
