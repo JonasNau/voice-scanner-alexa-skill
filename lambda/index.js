@@ -101,14 +101,14 @@ async function httpRequest(
           resolve(data);
           return;
         } else {
-          resolve({error: true, message: typeof response.data});
+          resolve({error: true, message: "Rückgabewert ist kein gültiges JSON. Versuche es erneut."});
         }
        
       })
           
     })
 }
-
+  
 //Eintrittspunkt des Nutzers
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
@@ -142,9 +142,9 @@ const AllIntentHandler = {
     );
   },
   async handle(handlerInput) {
-   let result = await voiceScannerClient.init();
+  //  let result = await voiceScannerClient.init();
 
-    const speakOutput = result.message;
+    const speakOutput = "Test";//result.message;
 
     return (
       handlerInput.responseBuilder
