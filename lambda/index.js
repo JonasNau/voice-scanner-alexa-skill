@@ -127,12 +127,12 @@ const LaunchRequestHandler = {
 
     //Initialisierte Voice Scanner
     //voiceScannerClient.init();
-    let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/18s.mp3' />`;
+    let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/test2.mp3'/>`;
     const speakOutput = `Willkommen beim Stimmen Scanner. Du kannst beispielsweise sagen: "starte Scanner" oder "Hilfe". Ich initialisiere den Scanner. ${audioFile} 1`;
 
     return handlerInput.responseBuilder
       .speak(speakOutput)
-      .reprompt(voiceScannerClient.getcurrentResult)
+      .reprompt(voiceScannerClient.getcurrentResult())
       .getResponse();
   },
 };
