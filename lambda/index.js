@@ -113,7 +113,7 @@ const LaunchRequestHandler = {
       Alexa.getRequestType(handlerInput.requestEnvelope) === "LaunchRequest"
     );
   },
-  handle(handlerInput) {
+  async handle(handlerInput) {
 
     let result = await voiceScannerClient.init();
 
