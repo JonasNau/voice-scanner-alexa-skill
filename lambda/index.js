@@ -18,6 +18,7 @@ class VoiceScannerClient {
     this.currentResult = false;
     this.filename = "";
     this.extension = "";
+    this.status = false;
   }
 
    async init() {
@@ -292,12 +293,12 @@ const LaunchRequestHandler = {
     
     let result = await voiceScannerClient.init();
     if (result.error) {
-      let speakOutput = `${JSON.stringify(result.message)} Versuche es erneut.`;
+      let speakOutput = `${result.message} Versuche es erneut.`;
       return handlerInput.responseBuilder
       .speak(speakOutput)
       .getResponse();
     } else {
-      let speakOutput = `${JSON.stringify(result.message)} Du kannst beispielsweise sagen: "seiteHinzufügen" oder "Hilfe". Möchtest du eine Seite hinzufügen?`;
+      let speakOutput = `${result.message} Du kannst beispielsweise sagen: "seiteHinzufügen" oder "Hilfe". Möchtest du eine Seite hinzufügen?`;
       setState(handlerInput, "SeiteHinzufuegengen")
       return handlerInput.responseBuilder
       .speak(speakOutput)
