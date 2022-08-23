@@ -96,8 +96,9 @@ async function httpRequest(
         }
         if (objectFunctions.makeJSON(response.data)) {
           let data = objectFunctions.makeJSON(response.data);
-          if (data.error == true) resolve(false);
+          if (data.error == true) {resolve(false); return;};
           resolve(data);
+          return;
         }
         resolve({error: true, message: response.data});
       })
