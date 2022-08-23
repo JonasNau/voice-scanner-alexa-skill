@@ -353,22 +353,24 @@ const AddPageIntentHandler = {
     return (
       (Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" &&
         Alexa.getIntentName(handlerInput.requestEnvelope) ===
-          "AddPageIntent") ||
-      (handlerInput.attributesManager.getSessionAttributes()?.currentState ===
-        "SeiteHinzufuegengen" &&
-        Alexa.getIntentName(handlerInput.requestEnvelope) ===
-          "AMAZON.YesIntent")
+          "AddPageIntent") 
+      //     ||
+      // (handlerInput.attributesManager.getSessionAttributes()?.currentState ===
+      //   "SeiteHinzufuegengen" &&
+      //   Alexa.getIntentName(handlerInput.requestEnvelope) ===
+      //     "AMAZON.YesIntent")
     );
   },
   async handle(handlerInput) {
     clearState(handlerInput);
 
     if (!(await voiceScannerClient.isAbleToScan())) {
-      let speakOutput = `Ein Fehler ist aufgetreten. ${
-        voiceScannerClient.currentResult?.message
-          ? voiceScannerClient.currentResult.message
-          : "Versuche es erneut."
-      }`;
+      let speakOutput = "Seite hinzufügen";
+      // let speakOutput = `Ein Fehler ist aufgetreten. ${
+      //   voiceScannerClient.currentResult?.message
+      //     ? voiceScannerClient.currentResult.message
+      //     : "Versuche es erneut."
+      // }`;
       return handlerInput.responseBuilder
         .speak(speakOutput)
         .reprompt(speakOutput)
