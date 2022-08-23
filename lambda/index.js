@@ -320,7 +320,7 @@ const AddPageIntentHandler = {
     clearState(handlerInput);
 
     if (!await voiceScannerClient.isAbleToScan()) {
-      let speakOutput = `Ein Fehler ist aufgetreten. ${voiceScannerClient.currentResult?.message !== false ? voiceScannerClient.currentResult.message : "Versuche es erneut."}`;
+      let speakOutput = `Ein Fehler ist aufgetreten.`;
       return handlerInput.responseBuilder
       .speak(speakOutput)
       .reprompt(speakOutput)
