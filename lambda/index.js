@@ -292,7 +292,7 @@ const LaunchRequestHandler = {
     
     let result = await voiceScannerClient.init();
     if (result.error) {
-      let speakOutput = `${result.message} Versuche es erneut.`;
+      let speakOutput = `${JSON.stringify(result.message)} Versuche es erneut.`;
       return handlerInput.responseBuilder
       .speak(speakOutput)
       .getResponse();
