@@ -148,7 +148,7 @@ const AllIntentHandler = {
     return (
       handlerInput.responseBuilder
         .speak(speakOutput)
-        .reprompt(result.message)
+        .reprompt(speakOutput)
         .getResponse()
     );
   },
