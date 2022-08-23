@@ -312,7 +312,7 @@ const AddPageIntentHandler = {
   canHandle(handlerInput) {
     return (
       (Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" ) &&
-      (Alexa.getIntentName(handlerInput.requestEnvelope) === "AddPageIntent") || (handlerInput.attributesManager.getSessionAttributes()?.currentState === "SeiteHinzufuegengen" && Alexa.getIntentName(handlerInput.requestEnvelope) === "AMAZON.YesIntent")
+      (Alexa.getIntentName(handlerInput.requestEnvelope) === "AddPageIntent") || (handlerInput.attributesManager.getSessionAttributes().currentState === "SeiteHinzufuegengen" && Alexa.getIntentName(handlerInput.requestEnvelope) === "AMAZON.YesIntent")
     );
   },
   async handle(handlerInput) {
@@ -543,16 +543,15 @@ const RestartScannerIntent = {
   },
 };
 
-function setState(handlerInput, state) {
+function setState(handlerInput, currentState) {
   const sessionAttributes =
     handlerInput.attributesManager.getSessionAttributes();
-  sessionAttributes.questionAsked = currentState;
-  handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+    sessionAttributes.questionAsked = currentState;
+    handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
 }
 
 function clearState(handlerInput) {
-  const sessionAttributes =
-    handlerInput.attributesManager.getSessionAttributes();
+  const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
   sessionAttributes.currentState = null;
   handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
 }
