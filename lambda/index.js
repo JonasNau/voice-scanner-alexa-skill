@@ -452,6 +452,7 @@ const SessionEndedRequestHandler = {
     console.log(
       `~~~~ Session ended: ${JSON.stringify(handlerInput.requestEnvelope)}`
     );
+    await voiceScannerClient.clear();
     clearState(handlerInput);
     // Any cleanup logic goes here.
     return handlerInput.responseBuilder.getResponse(); // notice we send an empty response
