@@ -15,7 +15,7 @@ class VoiceScannerClient {
   constructor() {
     this.isScanning = false;
     this.currentResult = false;
-    this.filename = ""
+    this.filename = "";
     this.extension = "";
   }
 
