@@ -124,7 +124,7 @@ class VoiceScannerClient {
       let response = await httpRequest({
         url: "/addPage",
         method: "post",
-        timeout: 0, //Some requests recieve only after the scanner is done -> 20 Seconds should be enough
+        timeout: 30000, //Some requests recieve only after the scanner is done -> 20 Seconds should be enough
         body: false,
         params: false, //For Get Request
        });
@@ -290,7 +290,7 @@ const LaunchRequestHandler = {
     //Initialisierte Voice Scanner
      let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/18s.mp3'/>`;
 
-    await callDirectiveService(handlerInput, `v1 Willkommen beim Stimmen Scanner. Ich initialisiere den Scanner. ${audioFile}`);
+    await callDirectiveService(handlerInput, `v2 Willkommen beim Stimmen Scanner. Ich initialisiere den Scanner. ${audioFile}`);
 
     let result = await voiceScannerClient.init();
     if (result.error) {
@@ -323,7 +323,7 @@ const AddPageIntentHandler = {
     clearState(handlerInput);
 
     let isAbleToScan = await voiceScannerClient.isAbleToScan();
-    voiceScannerClient.addPage();
+    (() => {await voiceScannerClient.addPage()})();
 
     return handlerInput.responseBuilder
     .speak(JSON.stringify(isAbleToScan))
