@@ -95,13 +95,13 @@ async function httpRequest(
           resolve({error: true, message: "Ein interner Fehler ist aufgetreten. Versuche es erneut."});
           return;
         }
-        if (objectFunctions.makeJSON(response.data)) {
+        if (await objectFunctions.makeJSON(response.data)) {
           let data = objectFunctions.makeJSON(response.data);
           if (data.error == true) {resolve({error: true, message: data.message}); return;};
           resolve(data);
           return;
         } else {
-          resolve({error: true, message: `Kein JSON ${response.data}`});
+          resolve({error: true, message: `Kein JSON`});
         }
        
       })
