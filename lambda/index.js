@@ -293,10 +293,6 @@ const LaunchRequestHandler = {
     await callDirectiveService(handlerInput, `v2 Willkommen beim Stimmen Scanner. Ich initialisiere den Scanner. ${audioFile}`);
 
     let result = await voiceScannerClient.init();
-    return handlerInput.responseBuilder
-      .speak(JSON.stringify(result))
-      .reprompt(JSON.stringify(result))
-      .getResponse();
     if (result.error) {
       let speakOutput = `${result.message} Versuche es erneut.`;
       return handlerInput.responseBuilder
@@ -327,6 +323,12 @@ const AddPageIntentHandler = {
     clearState(handlerInput);
 
     let isAbleToScan = await voiceScannerClient.isAbleToScan();
+
+    return handlerInput.responseBuilder
+    .speak(JSON.stringify(isAbleToScan))
+    .reprompt(JSON.stringify(isAbleToScan))
+    .getResponse(); 
+
     if (!isAbleToScan) {
       let speakOutput = `Ein Fehler ist aufgetreten. `; //${voiceScannerClient.currentResult?.message ? voiceScannerClient.currentResult.message : "Versuche es erneut."}
       return handlerInput.responseBuilder
