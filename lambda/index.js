@@ -281,7 +281,8 @@ const LaunchRequestHandler = {
   },
   async handle(handlerInput) {
     //Initialisierte Voice Scanner
-    await callDirectiveService(handlerInput);
+     let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/18s.mp3'/>`;
+    await callDirectiveService(handlerInput, `Willkommen beim Stimmen Scanner. Ich initialisiere den Scanner, dies dauert ca. 15 Sekunden. ${audioFile}`);
 
     let result = await voiceScannerClient.init();
     if (result.error) {
@@ -290,14 +291,14 @@ const LaunchRequestHandler = {
       .speak(speakOutput)
       .getResponse();
     } else {
-      speakOutput = `Willkommen beim Stimmen Scanner. Du kannst beispielsweise sagen: "seiteHinzufügen" oder "Hilfe". Möchtest du eine Seite hinzufügen?`;
+      speakOutput = `${result.message} Du kannst beispielsweise sagen: "seiteHinzufügen" oder "Hilfe". Möchtest du eine Seite hinzufügen?`;
       return handlerInput.responseBuilder
       .speak(speakOutput)
       .reprompt(speakOutput)
       .getResponse();
     }
 
-    // let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/test2.mp3'/>`;
+   
     
 
    
