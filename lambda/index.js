@@ -133,11 +133,11 @@ const LaunchRequestHandler = {
     voiceScannerClient.init();
 
     let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/test2.mp3'/>`;
-    const speakOutput = `1 Willkommen beim Stimmen Scanner. Du kannst beispielsweise sagen: "starte Scanner" oder "Hilfe". Ich initialisiere den Scanner. ${audioFile}`;
+    const speakOutput = `1 Willkommen beim Stimmen Scanner. Du kannst beispielsweise sagen: "seiteHinzufügen" oder "Hilfe". Ich initialisiere den Scanner. ${audioFile}`;
 
     return handlerInput.responseBuilder
       .speak(speakOutput)
-      .reprompt("Reprompt")
+      .reprompt(`Willkommen beim Stimmen Scanner. Du kannst beispielsweise sagen: "seiteHinzufügen" oder "Hilfe".`)
       .getResponse();
   },
 };
@@ -161,11 +161,11 @@ const AllIntentHandler = {
     // <say-as interpret-as="spell-out">hello</say-as>.`;
 
 
-    const speakOutput = `Here is some audio: <audio src='https://eduquiz.ddns.net/media/api/test2.mp3'/> Audio Ende.`;
+    const speakOutput = `Hello`;
 
     return (
       handlerInput.responseBuilder
-        .speak(speakOutput)
+        .speak(JSON.stringify(handlerInput))
         .reprompt(speakOutput)
         .getResponse()
     );
@@ -183,7 +183,7 @@ const HelpIntentHandler = {
   },
   handle(handlerInput) {
     const speakOutput =
-      'Mit diesem Skill kannst du durch deine Stimme einscannen und die Datei wird automatisch auf den Server hochgeladen. Wenn du sagst: "starte Scanner", dann beginne ich mit scannen';
+      'Mit diesem Skill kannst du durch deine Stimme einscannen und die Datei wird automatisch auf den Server hochgeladen. Wenn du sagst: "seiteHinzufügen", dann beginne ich mit scannen. Was möchtest du?';
 
     return handlerInput.responseBuilder
       .speak(speakOutput)
