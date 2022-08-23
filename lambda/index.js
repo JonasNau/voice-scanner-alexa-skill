@@ -31,17 +31,17 @@ class VoiceScannerClient {
        });
       
       if (response === false) {
-        this.currentResult = {error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."};
+        //this.currentResult = {error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."};
         resolve({error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."});
         return;
       }
       if (response.error) {
-        this.currentResult = {error: true, message: response.message};
+        //this.currentResult = {error: true, message: response.message};
         resolve({error: true, message: response.message});
         return;
       }
   
-      this.currentResult = {error: false, message: response.message};
+      //this.currentResult = {error: false, message: response.message};
       resolve({error: false, message: response.message});
       return;
     })
@@ -328,7 +328,7 @@ const AddPageIntentHandler = {
     voiceScannerClient.addPage();
     let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/30s.mp3'/>`;
     let speakOutput = `Eine Seite wird gescannt. Dies kann bis zu 30 Sekunden dauern. ${audioFile}. Möchtest du eine weitere Seite hinzufügen?`;
-    setState(handlerInput, "SeiteHinzufuegengen")
+    setState(handlerInput, "SeiteHinzufuegengen");
     return handlerInput.responseBuilder
       .speak(speakOutput)
       .reprompt(speakOutput)
