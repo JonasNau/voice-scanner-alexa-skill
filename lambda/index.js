@@ -241,9 +241,9 @@ class VoiceScannerClient {
     return new Promise(async (resolve, reject) => {
       await this.updateStatus();
       if (!this.status) {resolve(false); return};
-      // if (this.status.isScanning != false) {resolve(false); return};
-      if (this.status.currentState == "initialized") {resolve(true); return};
-      if (this.status.currentState == "ready") {resolve(true); return};
+      /* if (this.status.isScanning != false) {resolve(false); return}; */
+      if (this.status.currentState === "initialized") {resolve(true); return;};
+      if (this.status.currentState === "ready") {resolve(true); return;};
       resolve(false);
     }) 
   }
@@ -290,7 +290,7 @@ const LaunchRequestHandler = {
     //Initialisierte Voice Scanner
      let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/18s.mp3'/>`;
 
-    await callDirectiveService(handlerInput, `v2 Willkommen beim Stimmen Scanner. Ich initialisiere den Scanner. ${audioFile}`);
+    await callDirectiveService(handlerInput, `v1 Willkommen beim Stimmen Scanner. Ich initialisiere den Scanner. ${audioFile}`);
 
     let result = await voiceScannerClient.init();
     if (result.error) {
@@ -322,7 +322,7 @@ const AddPageIntentHandler = {
   async handle(handlerInput) {
     clearState(handlerInput);
 
-    let isAbleToScan = await voiceScannerClient.isAbleToScan()
+    let isAbleToScan = await voiceScannerClient.isAbleToScan();
     if (!isAbleToScan) {
       let speakOutput = `Ein Fehler ist aufgetreten. `; //${voiceScannerClient.currentResult?.message ? voiceScannerClient.currentResult.message : "Versuche es erneut."}
       return handlerInput.responseBuilder
