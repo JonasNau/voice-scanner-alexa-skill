@@ -248,7 +248,7 @@ async function httpRequest(
 }
   
 
-function callDirectiveService(handlerInput) {
+function callDirectiveService(handlerInput, speakOutput) {
   // Call Alexa Directive Service.
   const requestEnvelope = handlerInput.requestEnvelope;
   const directiveServiceClient = handlerInput.serviceClientFactory.getDirectiveServiceClient();
@@ -264,7 +264,7 @@ function callDirectiveService(handlerInput) {
     },
     directive: {
       type: "VoicePlayer.Speak",
-      speech: "Space is a bit far way. I'll need a few seconds to get the information from ISS."
+      speech: speakOutput
     },
   };
   // send directive
