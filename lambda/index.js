@@ -59,7 +59,12 @@ const LaunchRequestHandler = {
     );
   },
   handle(handlerInput) {
-    const speakOutput =
+
+    let result = await voiceScannerClient.init();
+
+    const speakOutput = result.message;
+
+    //const speakOutput =
       'Willkommen beim Stimmen Scanner. Du kannst beispielsweise sagen: "starte Scanner" oder "Hilfe". Was möchtest du?';
 
     return handlerInput.responseBuilder
