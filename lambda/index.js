@@ -74,7 +74,7 @@ const LaunchRequestHandler = {
   },
 };
 
-class voiceScannerClient {
+class VoiceScannerClient {
   constructor() {
     this.isScanning = false;
 
@@ -128,7 +128,7 @@ class voiceScannerClient {
 
 }
 
-let voiceScannerClient = new voiceScannerClient();
+let voiceScannerClient = new VoiceScannerClient();
 
 
 const AllIntentHandler = {
