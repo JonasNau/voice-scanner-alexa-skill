@@ -20,7 +20,7 @@ class VoiceScannerClient {
     }
   }
 
-   init() {
+   async init() {
     return new Promise(async (resolve, reject) => {
       let dataToSend = {filename: "Dateiname", extension: "pdf"};
       let dataString = JSON.stringify(dataToSend);
@@ -130,10 +130,10 @@ const LaunchRequestHandler = {
     //Initialisierte Voice Scanner
 
 
-    /*voiceScannerClient.init()*/
+    voiceScannerClient.init();
 
     let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/test2.mp3'/>`;
-    const speakOutput = `Willkommen beim Stimmen Scanner. Du kannst beispielsweise sagen: "starte Scanner" oder "Hilfe". Ich initialisiere den Scanner. ${audioFile} 1`;
+    const speakOutput = `1 Willkommen beim Stimmen Scanner. Du kannst beispielsweise sagen: "starte Scanner" oder "Hilfe". Ich initialisiere den Scanner. ${audioFile}`;
 
     return handlerInput.responseBuilder
       .speak(speakOutput)
@@ -398,7 +398,7 @@ const skillBuilder = Alexa.SkillBuilders.custom();
 
 exports.handler = (event, context, callback) => {
   // we need this so that async stuff will work better
-  context.callbackWaitsForEmptyEventLoop = false
+  context.callbackWaitsForEmptyEventLoop = false;
 
   // set up the skill with the new context
   return skillBuilder
