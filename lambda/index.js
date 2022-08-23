@@ -302,11 +302,6 @@ const LaunchRequestHandler = {
       .reprompt(speakOutput)
       .getResponse();
     }
-
-   
-    
-
-   
   },
 };
 
@@ -318,7 +313,7 @@ const AddPageIntentHandler = {
       (Alexa.getIntentName(handlerInput.requestEnvelope) === "AddPageIntent") || (handlerInput.attributesManager.getSessionAttributes().currentState === "SeiteHinzufuegengen" && Alexa.getIntentName(handlerInput.requestEnvelope) === "AMAZON.YesIntent")
     );
   },
-  handle(handlerInput) {
+  async handle(handlerInput) {
     clearState(handlerInput);
 
     if (!await voiceScannerClient.isAbleToScan()) {
