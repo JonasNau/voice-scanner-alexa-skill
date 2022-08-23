@@ -99,8 +99,10 @@ async function httpRequest(
           if (data.error == true) {resolve(false); return;};
           resolve(data);
           return;
+        } else {
+          resolve({error: true, message: response.data});
         }
-        resolve({error: true, message: response.data});
+       
       })
           
     })
