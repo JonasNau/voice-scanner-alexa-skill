@@ -31,17 +31,17 @@ class VoiceScannerClient {
        });
       
       if (response === false) {
-        //this.currentResult = {error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."};
+        this.currentResult = {error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."};
         resolve({error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."});
         return;
       }
       if (response.error) {
-        //this.currentResult = {error: true, message: response.message};
+        this.currentResult = {error: true, message: response.message};
         resolve({error: true, message: response.message});
         return;
       }
   
-      //this.currentResult = {error: false, message: response.message};
+      this.currentResult = {error: false, message: response.message};
       resolve({error: false, message: response.message});
       return;
     })
@@ -282,12 +282,6 @@ const LaunchRequestHandler = {
     );
   },
   async handle(handlerInput) {
-
-    return handlerInput.responseBuilder
-      .speak("Hallo")
-      .reprompt("Hallo")
-      .getResponse();
-
     //Initialisierte Voice Scanner
      let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/18s.mp3'/>`;
      try {
@@ -303,7 +297,7 @@ const LaunchRequestHandler = {
       .speak(speakOutput)
       .getResponse();
     } else {
-      let speakOutput = `${result.message} Du kannst beispielsweise sagen: "seiteHinzufügen" oder "Hilfe". Möchtest du eine Seite hinzufügen?`;
+      let speakOutput = `${JSON.stringify(result.message)} Du kannst beispielsweise sagen: "seiteHinzufügen" oder "Hilfe". Möchtest du eine Seite hinzufügen?`;
       setState(handlerInput, "SeiteHinzufuegengen")
       return handlerInput.responseBuilder
       .speak(speakOutput)
