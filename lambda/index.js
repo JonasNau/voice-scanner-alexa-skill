@@ -282,7 +282,8 @@ const LaunchRequestHandler = {
   async handle(handlerInput) {
     //Initialisierte Voice Scanner
     await callDirectiveService(handlerInput);
-    let result = voiceScannerClient.init();
+
+    let result = await voiceScannerClient.init();
     if (result.error) {
       let speakOutput = `${result.message} Versuche es erneut.`;
       return handlerInput.responseBuilder
@@ -326,7 +327,7 @@ const AllIntentHandler = {
 
     return (
       handlerInput.responseBuilder
-        .speak(JSON.stringify(handlerInput))
+        .speak(speakOutput)
         .reprompt(speakOutput)
         .getResponse()
     );
