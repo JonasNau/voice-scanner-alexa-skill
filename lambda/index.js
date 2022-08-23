@@ -100,7 +100,7 @@ async function httpRequest(
           resolve(data);
           return;
         } else {
-          resolve({error: true, message: response.data});
+          resolve({error: true, message: "Kein JSON"});
         }
        
       })
