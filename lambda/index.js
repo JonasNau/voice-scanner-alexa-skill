@@ -197,7 +197,7 @@ class VoiceScannerClient {
     return new Promise(async (resolve, reject) => {
       await this.updateStatus();
       if (!this.status) {resolve(false); return};
-      if (this.status.isScanning != false) {resolve(false); return};
+      // if (this.status.isScanning != false) {resolve(false); return};
       if (this.status.currentState == "initialized") {resolve(true); return};
       if (this.status.currentState == "ready") {resolve(true); return};
       resolve(false);
@@ -316,7 +316,6 @@ const AddPageIntentHandler = {
   },
   async handle(handlerInput) {
     clearState(handlerInput);
-
     if (!await voiceScannerClient.isAbleToScan()) {
       let speakOutput = `Ein Fehler ist aufgetreten. `; //${voiceScannerClient.currentResult?.message ? voiceScannerClient.currentResult.message : "Versuche es erneut."}
       return handlerInput.responseBuilder
