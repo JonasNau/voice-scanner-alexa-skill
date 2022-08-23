@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 /* *
  * This sample demonstrates handling intents from an Alexa skill using the Alexa Skills Kit SDK (v2).
  * Please visit https://alexa.design/cookbook for additional examples on implementing slots, dialog management,
@@ -7,10 +7,11 @@
 const Alexa = require("ask-sdk-core");
 
 //Custom Modules
-const axios = require('axios').default;
+const axios = require("axios").default;
 const objectFunctions = require("./includes/object-functions");
 
-const authToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiIzIiwidXVpZCI6ImM2OGNlZmJjLTIzNjQtNDhhYi1hMzkwLWFkNjcwY2E2ZWJmZCIsInVzZXJuYW1lIjoiSm9uYXMiLCJwYXNzd29yZCI6IiQyYSQxMCRwL0NIY3gyN1U1WjhpNEQ2M3l6bkVlaGc5Rno3Z0xiTjVHTzJuWFExODRLejVNbWFja0Y4VyIsImNyZWF0ZWQiOiJGcmkgQXVnIDE5IDIwMjIgMjA6MzY6NDEgR01UKzAyMDAgKE1pdHRlbGV1cm9ww6Rpc2NoZSBTb21tZXJ6ZWl0KSIsImxhc3RMb2dpbiI6bnVsbCwibGFzdFB3ZENoYW5nZSI6bnVsbCwiZ3JvdXBzIjpbImFkbWluIl0sInBlcm1pc3Npb25zIjp7fSwiaXNGb3JiaWRkZW5UbyI6W10sImV4cGlyZXMiOiJuZXZlciIsImlhdCI6MTY2MTE2ODQwMH0.lLARdA-oRfDlNzNS1wlhvAOQgLXPj1Mxyj333g9tXjM";
+const authToken =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiIzIiwidXVpZCI6ImM2OGNlZmJjLTIzNjQtNDhhYi1hMzkwLWFkNjcwY2E2ZWJmZCIsInVzZXJuYW1lIjoiSm9uYXMiLCJwYXNzd29yZCI6IiQyYSQxMCRwL0NIY3gyN1U1WjhpNEQ2M3l6bkVlaGc5Rno3Z0xiTjVHTzJuWFExODRLejVNbWFja0Y4VyIsImNyZWF0ZWQiOiJGcmkgQXVnIDE5IDIwMjIgMjA6MzY6NDEgR01UKzAyMDAgKE1pdHRlbGV1cm9ww6Rpc2NoZSBTb21tZXJ6ZWl0KSIsImxhc3RMb2dpbiI6bnVsbCwibGFzdFB3ZENoYW5nZSI6bnVsbCwiZ3JvdXBzIjpbImFkbWluIl0sInBlcm1pc3Npb25zIjp7fSwiaXNGb3JiaWRkZW5UbyI6W10sImV4cGlyZXMiOiJuZXZlciIsImlhdCI6MTY2MTE2ODQwMH0.lLARdA-oRfDlNzNS1wlhvAOQgLXPj1Mxyj333g9tXjM";
 
 class VoiceScannerClient {
   constructor() {
@@ -21,7 +22,7 @@ class VoiceScannerClient {
     this.status = false;
   }
 
-   async init() {
+  async init() {
     return new Promise(async (resolve, reject) => {
       let response = await httpRequest({
         url: "/init",
@@ -29,24 +30,29 @@ class VoiceScannerClient {
         timeout: 0, //Some requests recieve only after the scanner is done -> 20 Seconds should be enough
         body: false,
         params: false, //For Get Request
-       });
-      
+      });
+
       if (response === false) {
-        this.currentResult = {error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."};
-        resolve({error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."});
+        this.currentResult = {
+          error: true,
+          message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut.",
+        };
+        resolve({
+          error: true,
+          message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut.",
+        });
         return;
       }
       if (response.error) {
-        this.currentResult = {error: true, message: response.message};
-        resolve({error: true, message: response.message});
+        this.currentResult = { error: true, message: response.message };
+        resolve({ error: true, message: response.message });
         return;
       }
-  
-      this.currentResult = {error: false, message: response.message};
-      resolve({error: false, message: response.message});
+
+      this.currentResult = { error: false, message: response.message };
+      resolve({ error: false, message: response.message });
       return;
-    })
-   
+    });
   }
 
   async clear() {
@@ -57,23 +63,29 @@ class VoiceScannerClient {
         timeout: 5000, //Some requests recieve only after the scanner is done -> 20 Seconds should be enough
         body: false,
         params: false, //For Get Request
-       });
-      
+      });
+
       if (response === false) {
-        this.currentResult = {error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."};
-        resolve({error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."});
+        this.currentResult = {
+          error: true,
+          message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut.",
+        };
+        resolve({
+          error: true,
+          message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut.",
+        });
         return;
       }
       if (response.error) {
-        this.currentResult = {error: true, message: response.message}
-        resolve({error: true, message: response.message});
+        this.currentResult = { error: true, message: response.message };
+        resolve({ error: true, message: response.message });
         return;
       }
-  
-      this.currentResult = {error: false, message: response.message};
-      resolve({error: false, message: response.message});
+
+      this.currentResult = { error: false, message: response.message };
+      resolve({ error: false, message: response.message });
       return;
-    })
+    });
   }
 
   async addPage() {
@@ -84,28 +96,34 @@ class VoiceScannerClient {
         timeout: 0, //Some requests recieve only after the scanner is done -> 20 Seconds should be enough
         body: false,
         params: false, //For Get Request
-       });
-      
+      });
+
       if (response === false) {
-        this.currentResult = {error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."};
-        resolve({error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."});
+        this.currentResult = {
+          error: true,
+          message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut.",
+        };
+        resolve({
+          error: true,
+          message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut.",
+        });
         return;
       }
       if (response.error) {
-        this.currentResult = {error: true, message: response.message}
-        resolve({error: true, message: response.message});
+        this.currentResult = { error: true, message: response.message };
+        resolve({ error: true, message: response.message });
         return;
       }
-  
-      this.currentResult = {error: false, message: response.message};
-      resolve({error: false, message: response.message});
+
+      this.currentResult = { error: false, message: response.message };
+      resolve({ error: false, message: response.message });
       return;
-    })
+    });
   }
 
   async convertAndUpload(filename, extension) {
     return new Promise(async (resolve, reject) => {
-      let dataToSend = {filename: filename, extension: extension};
+      let dataToSend = { filename: filename, extension: extension };
       let dataString = JSON.stringify(dataToSend);
       let response = await httpRequest({
         url: "/convertAndUpload",
@@ -117,24 +135,30 @@ class VoiceScannerClient {
         timeout: 0, //Some requests recieve only after the scanner is done -> 20 Seconds should be enough
         body: false,
         params: false, //For Get Request
-        data: dataString
-       });
-      
+        data: dataString,
+      });
+
       if (response === false) {
-        this.currentResult = {error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."};
-        resolve({error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."});
+        this.currentResult = {
+          error: true,
+          message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut.",
+        };
+        resolve({
+          error: true,
+          message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut.",
+        });
         return;
       }
       if (response.error) {
-        this.currentResult = {error: true, message: response.message}
-        resolve({error: true, message: response.message});
+        this.currentResult = { error: true, message: response.message };
+        resolve({ error: true, message: response.message });
         return;
       }
-  
-      this.currentResult = {error: false, message: response.message};
-      resolve({error: false, message: response.message});
+
+      this.currentResult = { error: false, message: response.message };
+      resolve({ error: false, message: response.message });
       return;
-    })
+    });
   }
 
   async kill() {
@@ -145,20 +169,26 @@ class VoiceScannerClient {
         timeout: 5000, //Some requests recieve only after the scanner is done -> 20 Seconds should be enough
         body: false,
         params: false, //For Get Request
-       });
-      
+      });
+
       if (response === false) {
-        this.currentResult = {error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."};
-        resolve({error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."});
+        this.currentResult = {
+          error: true,
+          message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut.",
+        };
+        resolve({
+          error: true,
+          message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut.",
+        });
       }
       if (response.error) {
-        this.currentResult = {error: true, message: response.message}
-        resolve({error: true, message: response.message});
+        this.currentResult = { error: true, message: response.message };
+        resolve({ error: true, message: response.message });
       }
-  
-      this.currentResult = {error: false, message: response.message};
-      resolve({error: false, message: response.message});
-    })
+
+      this.currentResult = { error: false, message: response.message };
+      resolve({ error: false, message: response.message });
+    });
   }
 
   async getNumberOfPages() {
@@ -175,16 +205,16 @@ class VoiceScannerClient {
         timeout: 0, //Some requests recieve only after the scanner is done -> 20 Seconds should be enough
         body: false,
         params: false, //For Get Request
-       });
-      
+      });
+
       if (response === false) {
         this.status = false;
         resolve(true);
         return;
       }
-      this.status = response
+      this.status = response;
       resolve(true);
-    })
+    });
   }
 
   async canConvertAndUploadFiles() {
@@ -202,7 +232,6 @@ class VoiceScannerClient {
     if (this.status.currentState == "ready") return true;
     return false;
   }
-
 }
 
 const voiceScannerClient = new VoiceScannerClient();
@@ -218,43 +247,51 @@ async function httpRequest(
     timeout: 0, //Some requests recieve only after the scanner is done -> 20 Seconds should be enough
     body: false,
     params: false, //For Get Request
-    data: JSON.stringify("{'username': 'test', 'password': 'sjfösdjflsdakjföads'}")
-}) {
-    return new Promise(async (resolve, reject) => {
+    data: JSON.stringify(
+      "{'username': 'test', 'password': 'sjfösdjflsdakjföads'}"
+    ),
+  }
+) {
+  return new Promise(async (resolve, reject) => {
+    const instance = axios.create({
+      baseURL: "http://wuschelcloud.synology.me:3000/api/voiceScanner",
+      timeout: 0,
+      headers: { "auth-token": authToken },
+    });
 
-    
-      const instance = axios.create({
-        baseURL: 'http://wuschelcloud.synology.me:3000/api/voiceScanner',
-        timeout: 0,
-        headers: {'auth-token': authToken},
-      });
-
-      instance.request(options).then((response) => {
-        //data, status, statusText, headers, config, request
-        if (response.status > 399) {
-          console.error(response)
-          resolve({error: true, message: "Ein interner Fehler ist aufgetreten. Versuche es erneut."});
+    instance.request(options).then((response) => {
+      //data, status, statusText, headers, config, request
+      if (response.status > 399) {
+        console.error(response);
+        resolve({
+          error: true,
+          message: "Ein interner Fehler ist aufgetreten. Versuche es erneut.",
+        });
+        return;
+      }
+      if (objectFunctions.makeJSON(response.data)) {
+        let data = objectFunctions.makeJSON(response.data);
+        if (data.error == true) {
+          resolve({ error: true, message: data.message });
           return;
         }
-        if (objectFunctions.makeJSON(response.data)) {
-          let data = objectFunctions.makeJSON(response.data);
-          if (data.error == true) {resolve({error: true, message: data.message}); return;};
-          resolve(data);
-          return;
-        } else {
-          resolve({error: true, message: "Rückgabewert ist kein gültiges JSON. Versuche es erneut."});
-        }
-       
-      })
-          
-    })
+        resolve(data);
+        return;
+      } else {
+        resolve({
+          error: true,
+          message: "Rückgabewert ist kein gültiges JSON. Versuche es erneut.",
+        });
+      }
+    });
+  });
 }
-  
 
 function callDirectiveService(handlerInput, speakOutput) {
   // Call Alexa Directive Service.
   const requestEnvelope = handlerInput.requestEnvelope;
-  const directiveServiceClient = handlerInput.serviceClientFactory.getDirectiveServiceClient();
+  const directiveServiceClient =
+    handlerInput.serviceClientFactory.getDirectiveServiceClient();
 
   const requestId = requestEnvelope.request.requestId;
   const endpoint = requestEnvelope.context.System.apiEndpoint;
@@ -267,13 +304,12 @@ function callDirectiveService(handlerInput, speakOutput) {
     },
     directive: {
       type: "VoicePlayer.Speak",
-      speech: speakOutput
+      speech: speakOutput,
     },
   };
   // send directive
   return directiveServiceClient.enqueue(directive, endpoint, token);
 }
-
 
 //Eintrittspunkt des Nutzers
 const LaunchRequestHandler = {
@@ -284,47 +320,56 @@ const LaunchRequestHandler = {
   },
   async handle(handlerInput) {
     //Initialisierte Voice Scanner
-     let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/18s.mp3'/>`;
-     try {
-      await callDirectiveService(handlerInput, `v1 Willkommen beim Stimmen Scanner. Ich initialisiere den Scanner. ${audioFile}`);
-     } catch (e) {
+    let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/18s.mp3'/>`;
+    try {
+      await callDirectiveService(
+        handlerInput,
+        `v1 Willkommen beim Stimmen Scanner. Ich initialisiere den Scanner. ${audioFile}`
+      );
+    } catch (e) {
       console.error(e);
-     }
-    
+    }
+
     let result = await voiceScannerClient.init();
     if (result.error) {
       let speakOutput = `${result.message} Versuche es erneut.`;
-      return handlerInput.responseBuilder
-      .speak(speakOutput)
-      .getResponse();
+      return handlerInput.responseBuilder.speak(speakOutput).getResponse();
     } else {
       let speakOutput = `${result.message} Du kannst beispielsweise sagen: "seiteHinzufügen" oder "Hilfe". Möchtest du eine Seite hinzufügen?`;
-      setState(handlerInput, "SeiteHinzufuegengen")
+      setState(handlerInput, "SeiteHinzufuegengen");
       return handlerInput.responseBuilder
-      .speak(speakOutput)
-      .reprompt(speakOutput)
-      .getResponse();
+        .speak(speakOutput)
+        .reprompt(speakOutput)
+        .getResponse();
     }
   },
 };
 
-
 const AddPageIntentHandler = {
   canHandle(handlerInput) {
     return (
-      (Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" ) &&
-      (Alexa.getIntentName(handlerInput.requestEnvelope) === "AddPageIntent") || (handlerInput.attributesManager.getSessionAttributes().currentState === "SeiteHinzufuegengen" && Alexa.getIntentName(handlerInput.requestEnvelope) === "AMAZON.YesIntent")
+      (Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" &&
+        Alexa.getIntentName(handlerInput.requestEnvelope) ===
+          "AddPageIntent") ||
+      (handlerInput.attributesManager.getSessionAttributes().currentState ===
+        "SeiteHinzufuegengen" &&
+        Alexa.getIntentName(handlerInput.requestEnvelope) ===
+          "AMAZON.YesIntent")
     );
   },
   async handle(handlerInput) {
     clearState(handlerInput);
 
-    if (!await voiceScannerClient.isAbleToScan()) {
-      let speakOutput = `Ein Fehler ist aufgetreten. ${voiceScannerClient.currentResult?.message ? voiceScannerClient.currentResult.message : "Versuche es erneut."}`;
+    if (!(await voiceScannerClient.isAbleToScan())) {
+      let speakOutput = `Ein Fehler ist aufgetreten. ${
+        voiceScannerClient.currentResult?.message
+          ? voiceScannerClient.currentResult.message
+          : "Versuche es erneut."
+      }`;
       return handlerInput.responseBuilder
-      .speak(speakOutput)
-      .reprompt(speakOutput)
-      .getResponse();
+        .speak(speakOutput)
+        .reprompt(speakOutput)
+        .getResponse();
     }
     voiceScannerClient.addPage();
     let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/30s.mp3'/>`;
@@ -337,26 +382,23 @@ const AddPageIntentHandler = {
   },
 };
 
-
-
 const AllIntentHandler = {
   canHandle(handlerInput) {
     return (
-      Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" || Alexa.getIntentName(handlerInput.requestEnvelope) === "AMAZON.FallbackIntent"
-  );
+      Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" ||
+      Alexa.getIntentName(handlerInput.requestEnvelope) ===
+        "AMAZON.FallbackIntent"
+    );
   },
   async handle(handlerInput) {
     const speakOutput = `Das habe ich nicht verstanden. Du kannst sagen "seiteHinzufügen" oder "Hilfe". Was möchtest du?`;
 
-    return (
-      handlerInput.responseBuilder
-        .speak(speakOutput)
-        .reprompt(speakOutput)
-        .getResponse()
-    );
+    return handlerInput.responseBuilder
+      .speak(speakOutput)
+      .reprompt(speakOutput)
+      .getResponse();
   },
 };
-
 
 //Hilfe
 const HelpIntentHandler = {
@@ -521,10 +563,7 @@ const StartIntentHandler = {
   },
 };
 
-
 //
-
-
 
 const RestartScannerIntent = {
   canHandle(handlerInput) {
@@ -547,12 +586,13 @@ const RestartScannerIntent = {
 function setState(handlerInput, currentState) {
   const sessionAttributes =
     handlerInput.attributesManager.getSessionAttributes();
-    sessionAttributes.questionAsked = currentState;
-    handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+  sessionAttributes.currentState = currentState;
+  handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
 }
 
 function clearState(handlerInput) {
-  const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+  const sessionAttributes =
+    handlerInput.attributesManager.getSessionAttributes();
   sessionAttributes.currentState = null;
   handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
 }
@@ -562,7 +602,6 @@ function clearState(handlerInput) {
  * payloads to the handlers above. Make sure any new handlers or interceptors you've
  * defined are included below. The order matters - they're processed top to bottom
  * */
-
 
 // create a custom skill builder
 const skillBuilder = Alexa.SkillBuilders.custom();
@@ -581,16 +620,16 @@ exports.handler = (event, context, callback) => {
       SessionEndedRequestHandler,
       AddPageIntentHandler,
       AllIntentHandler
-    ).withApiClient(new Alexa.DefaultApiClient())
+    )
+    .withApiClient(new Alexa.DefaultApiClient())
     .addErrorHandlers(ErrorHandler)
     .withCustomUserAgent("jonas/voice-scanner/v1.0")
     .lambda()(event, context, callback);
-}
+};
 
 //  exports.handler = function(event, context, callback) {
 //   context.callbackWaitsForEmptyEventLoop = false;
 //  }
- 
 
 // exports.handler = Alexa.SkillBuilders.custom()
 //   .addRequestHandlers(
@@ -605,4 +644,3 @@ exports.handler = (event, context, callback) => {
 //   .addErrorHandlers(ErrorHandler)
 //   .withCustomUserAgent("jonas/voice-scanner/v1.0")
 //   .lambda();
-
