@@ -328,7 +328,7 @@ const LaunchRequestHandler = {
       `v1 Willkommen beim Stimmen Scanner. Ich initialisiere den Scanner. ${audioFile}`
     );
 
-    let result = await voiceScannerClient.init();
+    let result = {error: false, message: "Test"};
     if (result.error) {
       let speakOutput = `${result.message} Versuche es erneut.`;
       return handlerInput.responseBuilder.speak(speakOutput).getResponse();
