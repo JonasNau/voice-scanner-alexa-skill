@@ -101,7 +101,7 @@ async function httpRequest(
           resolve(data);
           return;
         } else {
-          resolve({error: true, message: response.data.message});
+          resolve({error: true, message: typeof response.data});
         }
        
       })
