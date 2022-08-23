@@ -325,7 +325,7 @@ const AddPageIntentHandler = {
   },
   handle(handlerInput) {
     //scannen
-    let speakOutput = "Willst du eine Seite hinzufügen?";
+    let speakOutput = "Okay, eine Seite wird hinzugefügt.";
     setQuestion(handlerInput, "DoYouWantToAddAPage");
     return handlerInput.responseBuilder
       .speak(speakOutput)
