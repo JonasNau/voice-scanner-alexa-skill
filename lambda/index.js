@@ -24,6 +24,8 @@ class VoiceScannerClient {
 
   async init() {
     return new Promise(async (resolve, reject) => {
+      resolve({error: false, message: "Test"})
+      return;
       let response = await httpRequest({
         url: "/init",
         method: "post",
