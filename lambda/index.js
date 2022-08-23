@@ -278,19 +278,6 @@ function callDirectiveService(handlerInput, speakOutput) {
 }
 
 
-function setState(handlerInput, currentState) {
-  const sessionAttributes =
-    handlerInput.attributesManager.getSessionAttributes();
-    sessionAttributes.questionAsked = currentState;
-    handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
-}
-
-function clearState(handlerInput) {
-  const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
-  sessionAttributes.currentState = null;
-  handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
-}
-
 //Eintrittspunkt des Nutzers
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
@@ -325,7 +312,12 @@ const LaunchRequestHandler = {
 
 const AddPageIntentHandler = {
   canHandle(handlerInput) {
-   return false;
+    if ((Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest") && (Alexa.getIntentName(handlerInput.requestEnvelope) === "AddPageIntent")) {
+      return true;
+    }
+   if ((handlerInput.attributesManager.getSessionAttributes().currentState === "SeiteHinzufuegen") && (Alexa.getIntentName(handlerInput.requestEnvelope) === "AMAZON.YesIntent")) {
+    return true;
+   }
   },
   async handle(handlerInput) {
     clearState(handlerInput);
@@ -558,7 +550,18 @@ const RestartScannerIntent = {
   },
 };
 
+function setState(handlerInput, currentState) {
+  const sessionAttributes =
+    handlerInput.attributesManager.getSessionAttributes();
+    sessionAttributes.questionAsked = currentState;
+    handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+}
 
+function clearState(handlerInput) {
+  const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+  sessionAttributes.currentState = null;
+  handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+}
 
 /**
  * This handler acts as the entry point for your skill, routing all request and response
