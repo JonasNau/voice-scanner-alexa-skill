@@ -323,7 +323,7 @@ const AddPageIntentHandler = {
     clearState(handlerInput);
 
     let isAbleToScan = await voiceScannerClient.isAbleToScan();
-    (async() => {await voiceScannerClient.addPage()})();
+    (async () => {await voiceScannerClient.addPage()})();
 
     return handlerInput.responseBuilder
     .speak(JSON.stringify(isAbleToScan))
@@ -583,7 +583,7 @@ const skillBuilder = Alexa.SkillBuilders.custom();
 
 exports.handler = (event, context, callback) => {
   // we need this so that async stuff will work better
-  context.callbackWaitsForEmptyEventLoop = false;
+  //context.callbackWaitsForEmptyEventLoop = false;
 
   // set up the skill with the new context
   return skillBuilder
