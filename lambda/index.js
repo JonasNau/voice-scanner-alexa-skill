@@ -300,7 +300,7 @@ const LaunchRequestHandler = {
       .getResponse();
     } else {
       let speakOutput = `${result.message} Du kannst beispielsweise sagen: "seiteHinzufügen" oder "Hilfe". Möchtest du eine Seite hinzufügen?`;
-      setState(handlerInput, "SeiteHinzufuegengen")
+      setState(handlerInput, "SeiteHinzufuegen")
       return handlerInput.responseBuilder
       .speak(speakOutput)
       .reprompt(speakOutput)
@@ -312,7 +312,7 @@ const LaunchRequestHandler = {
 
 const AddPageIntentHandler = {
   canHandle(handlerInput) {
-    return (Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" && (Alexa.getIntentName(handlerInput.requestEnvelope) === "AddPageIntent") || ((handlerInput.attributesManager.getSessionAttributes().currentState === "SeiteHinzufuegengen") && (Alexa.getIntentName(handlerInput.requestEnvelope) === "AMAZON.YesIntent")))
+    return (Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" && (Alexa.getIntentName(handlerInput.requestEnvelope) === "AddPageIntent") || ((handlerInput.attributesManager.getSessionAttributes().currentState === "SeiteHinzufuegen") && (Alexa.getIntentName(handlerInput.requestEnvelope) === "AMAZON.YesIntent")))
   },
   async handle(handlerInput) {
     clearState(handlerInput);
@@ -327,7 +327,7 @@ const AddPageIntentHandler = {
     voiceScannerClient.addPage();
     let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/30s.mp3'/>`;
     let speakOutput = `Eine Seite wird gescannt. Dies kann bis zu 30 Sekunden dauern. ${audioFile} Möchtest du eine weitere Seite hinzufügen?`;
-    setState(handlerInput, "SeiteHinzufuegengen");
+    setState(handlerInput, "SeiteHinzufuegen");
     return handlerInput.responseBuilder
       .speak(speakOutput)
       .reprompt("Möchtest du eine weitere Seite hinzufügen?")
