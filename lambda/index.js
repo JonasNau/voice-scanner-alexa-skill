@@ -14,6 +14,7 @@ const authToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiIzIiwidXVp
 class VoiceScannerClient {
   constructor() {
     this.isScanning = false;
+    this.currentResult = false;
   }
 
   async init() {
@@ -33,12 +34,15 @@ class VoiceScannerClient {
      });
     
     if (response === false) {
+      this.currentResult = {error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."};
       return {error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."};
     }
     if (response.error) {
-      return {error: true, message: response.message}
+      this.currentResult = {error: true, message: response.message}
+      return {error: true, message: response.message};
     }
 
+    this.currentResult = {error: false, message: response.message};
     return {error: false, message: response.message};
   }
 
@@ -118,17 +122,15 @@ const LaunchRequestHandler = {
   },
   async handle(handlerInput) {
 
-    /** 
-    let result = await voiceScannerClient.init();
+    //Initialisierte Voice Scanner
+    voiceScannerClient.init();
 
-    const speakOutput = result.message;
-    */
-
-    const speakOutput = 'Willkommen beim Stimmen Scanner. Du kannst beispielsweise sagen: "starte Scanner" oder "Hilfe". Was möchtest du? 0';
+    let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/18s.mp3' />`;
+    const speakOutput = `Willkommen beim Stimmen Scanner. Du kannst beispielsweise sagen: "starte Scanner" oder "Hilfe". Ich initialisiere den Scanner. ${audioFile} 1`;
 
     return handlerInput.responseBuilder
       .speak(speakOutput)
-      .reprompt(speakOutput)
+      .reprompt(voiceScannerClient.currentResult.message)
       .getResponse();
   },
 };
