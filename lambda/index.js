@@ -141,9 +141,10 @@ const AllIntentHandler = {
   );
   },
   async handle(handlerInput) {
-  //  let result = await voiceScannerClient.init();
+  //let result = await voiceScannerClient.init();
+  //result.message;
 
-    const speakOutput = "Test";//result.message;
+    const speakOutput = "Test";
 
     return (
       handlerInput.responseBuilder
