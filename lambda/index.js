@@ -20,7 +20,7 @@ class VoiceScannerClient {
     }
   }
 
-  async init() {
+   init() {
     return new Promise(async (resolve, reject) => {
       let dataToSend = {filename: "Dateiname", extension: "pdf"};
       let dataString = JSON.stringify(dataToSend);
