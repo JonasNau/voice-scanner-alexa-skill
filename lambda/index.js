@@ -325,12 +325,12 @@ const LaunchRequestHandler = {
 
 const AddPageIntentHandler = {
   canHandle(handlerInput) {
-    if ((Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest") && (Alexa.getIntentName(handlerInput.requestEnvelope) === "AddPageIntent")) {
-      return true;
-    }
-   if ((handlerInput.attributesManager.getSessionAttributes().currentState === "SeiteHinzufuegen") && (Alexa.getIntentName(handlerInput.requestEnvelope) === "AMAZON.YesIntent")) {
-    return true;
-   }
+  //   if ((Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest") && (Alexa.getIntentName(handlerInput.requestEnvelope) === "AddPageIntent")) {
+  //     return true;
+  //   }
+  //  if ((handlerInput.attributesManager.getSessionAttributes().currentState === "SeiteHinzufuegen") && (Alexa.getIntentName(handlerInput.requestEnvelope) === "AMAZON.YesIntent")) {
+  //   return true;
+  //  }
    return false;
   },
   async handle(handlerInput) {
