@@ -137,8 +137,7 @@ const LaunchRequestHandler = {
 const AllIntentHandler = {
   canHandle(handlerInput) {
     return (
-      Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" || Alexa.getIntentName(handlerInput.requestEnvelope) ===
-      "AMAZON.FallbackIntent"
+      Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" || Alexa.getIntentName(handlerInput.requestEnvelope) === "AMAZON.FallbackIntent"
   );
   },
   async handle(handlerInput) {
