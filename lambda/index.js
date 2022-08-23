@@ -311,13 +311,13 @@ const LaunchRequestHandler = {
 
 const AddPageIntentHandler = {
   canHandle(handlerInput) {
-    return false;
+    return ((Alexa.getIntentName(handlerInput.requestEnvelope) === "AddPageIntent"))
   },
   async handle(handlerInput) {
     clearState(handlerInput);
 
     if (!await voiceScannerClient.isAbleToScan()) {
-      let speakOutput = `Ein Fehler ist aufgetreten.`;
+      let speakOutput = `Ein Fehler ist aufgetreten. `; //${voiceScannerClient.currentResult?.message ? voiceScannerClient.currentResult.message : "Versuche es erneut."}
       return handlerInput.responseBuilder
       .speak(speakOutput)
       .reprompt(speakOutput)
