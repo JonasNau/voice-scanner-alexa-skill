@@ -322,12 +322,12 @@ const AddPageIntentHandler = {
   async handle(handlerInput) {
     clearState(handlerInput);
 
-    let isAbleToScan = await voiceScannerClient.isAbleToScan();
+    // let isAbleToScan = await voiceScannerClient.isAbleToScan();
     (function() {voiceScannerClient.addPage()})();
 
     return handlerInput.responseBuilder
-    .speak(JSON.stringify(isAbleToScan))
-    .reprompt(JSON.stringify(isAbleToScan))
+    .speak(JSON.stringify("Scanne..."))
+    .reprompt(JSON.stringify("Scanne..."))
     .getResponse(); 
 
     if (!isAbleToScan) {
