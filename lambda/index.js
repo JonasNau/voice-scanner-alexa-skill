@@ -322,11 +322,11 @@ const LaunchRequestHandler = {
   },
   async handle(handlerInput) {
     //Initialisierte Voice Scanner
-    let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/18s.mp3'/>`;
-    await callDirectiveService(
-      handlerInput,
-      `v1 Willkommen beim Stimmen Scanner. Ich initialisiere den Scanner. ${audioFile}`
-    );
+    // let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/18s.mp3'/>`;
+    // await callDirectiveService(
+    //   handlerInput,
+    //   `v1 Willkommen beim Stimmen Scanner. Ich initialisiere den Scanner. ${audioFile}`
+    // );
 
     let result = {error: false, message: "Test"};
     if (result.error) {
@@ -349,7 +349,7 @@ const AddPageIntentHandler = {
       (Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" &&
         Alexa.getIntentName(handlerInput.requestEnvelope) ===
           "AddPageIntent") ||
-      (handlerInput.attributesManager.getSessionAttributes().currentState ===
+      (handlerInput.attributesManager.getSessionAttributes()?.currentState ===
         "SeiteHinzufuegengen" &&
         Alexa.getIntentName(handlerInput.requestEnvelope) ===
           "AMAZON.YesIntent")
