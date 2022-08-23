@@ -21,7 +21,7 @@ class VoiceScannerClient {
     let dataString = JSON.stringify(dataToSend);
     let response = await httpRequest({
       url: "/init",
-      method: "get",
+      method: "post",
       headers: {
         "Content-Type": "application/json",
         "Content-Length": Buffer.byteLength(dataString),
@@ -29,7 +29,7 @@ class VoiceScannerClient {
       timeout: 0, //Some requests recieve only after the scanner is done -> 20 Seconds should be enough
       body: false,
       params: false, //For Get Request
-      data: JSON.stringify(dataString)
+      data: dataString
      });
     
     if (response === false) {
