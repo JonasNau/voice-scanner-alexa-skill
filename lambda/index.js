@@ -137,27 +137,6 @@ const LaunchRequestHandler = {
 const AllIntentHandler = {
   canHandle(handlerInput) {
     return (
-      Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" && Alexa.getIntentName(handlerInput.requestEnvelope) === "AMAZON.FallbackIntent"
-  );
-  },
-  async handle(handlerInput) {
-  //  let result = await voiceScannerClient.init();
-
-    const speakOutput = "Test";//result.message;
-
-    return (
-      handlerInput.responseBuilder
-        .speak(speakOutput)
-        .reprompt(result.message)
-        .getResponse()
-    );
-  },
-};
-
-
-const FallbackIntent = {
-  canHandle(handlerInput) {
-    return (
       Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" || Alexa.getIntentName(handlerInput.requestEnvelope) === "AMAZON.FallbackIntent"
   );
   },
@@ -174,6 +153,7 @@ const FallbackIntent = {
     );
   },
 };
+
 
 //Hilfe
 const HelpIntentHandler = {
@@ -282,24 +262,24 @@ const SessionEndedRequestHandler = {
  * It will simply repeat the intent the user said. You can create custom handlers for your intents
  * by defining them above, then also adding them to the request handler chain below
  * */
-const IntentReflectorHandler = {
-  canHandle(handlerInput) {
-    return (
-      Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest"
-    );
-  },
-  handle(handlerInput) {
-    const intentName = Alexa.getIntentName(handlerInput.requestEnvelope);
-    const speakOutput = `You just triggered ${intentName}`;
+// const IntentReflectorHandler = {
+//   canHandle(handlerInput) {
+//     return (
+//       Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest"
+//     );
+//   },
+//   handle(handlerInput) {
+//     const intentName = Alexa.getIntentName(handlerInput.requestEnvelope);
+//     const speakOutput = `You just triggered ${intentName}`;
 
-    return handlerInput.responseBuilder
-      .speak(speakOutput)
-      .reprompt(
-        "add a reprompt if you want to keep the session open for the user to respond"
-      )
-      .getResponse();
-  },
-};
+//     return handlerInput.responseBuilder
+//       .speak(speakOutput)
+//       .reprompt(
+//         "add a reprompt if you want to keep the session open for the user to respond"
+//       )
+//       .getResponse();
+//   },
+// };
 /**
  * Generic error handling to capture any syntax or routing errors. If you receive an error
  * stating the request handler chain is not found, you have not implemented a handler for
@@ -401,7 +381,6 @@ exports.handler = Alexa.SkillBuilders.custom()
     CancelAndStopIntentHandler,
     SessionEndedRequestHandler,
     AddPageIntentHandler,
-    IntentReflectorHandler,
     AllIntentHandler
   )
   .addErrorHandlers(ErrorHandler)
