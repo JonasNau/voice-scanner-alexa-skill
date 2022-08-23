@@ -278,6 +278,19 @@ function callDirectiveService(handlerInput, speakOutput) {
 }
 
 
+function setState(handlerInput, currentState) {
+  const sessionAttributes =
+    handlerInput.attributesManager.getSessionAttributes();
+    sessionAttributes.questionAsked = currentState;
+    handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+}
+
+function clearState(handlerInput) {
+  const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+  sessionAttributes.currentState = null;
+  handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+}
+
 //Eintrittspunkt des Nutzers
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
@@ -551,18 +564,7 @@ const RestartScannerIntent = {
   },
 };
 
-function setState(handlerInput, currentState) {
-  const sessionAttributes =
-    handlerInput.attributesManager.getSessionAttributes();
-    sessionAttributes.questionAsked = currentState;
-    handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
-}
 
-function clearState(handlerInput) {
-  const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
-  sessionAttributes.currentState = null;
-  handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
-}
 
 /**
  * This handler acts as the entry point for your skill, routing all request and response
