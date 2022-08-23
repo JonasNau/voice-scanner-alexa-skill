@@ -133,11 +133,11 @@ const LaunchRequestHandler = {
     voiceScannerClient.init();
 
     let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/test2.mp3'/>`;
-    const speakOutput = `1 Willkommen beim Stimmen Scanner. Du kannst beispielsweise sagen: "seiteHinzufügen" oder "Hilfe". Ich initialisiere den Scanner. ${audioFile}`;
+    const speakOutput = `2 Willkommen beim Stimmen Scanner. Du kannst beispielsweise sagen: "seiteHinzufügen" oder "Hilfe". Ich initialisiere den Scanner. ${audioFile}`;
 
     return handlerInput.responseBuilder
       .speak(speakOutput)
-      .reprompt(`Willkommen beim Stimmen Scanner. Du kannst beispielsweise sagen: "seiteHinzufügen" oder "Hilfe".`)
+      .reprompt(`Willkommen beim Stimmen Scanner. Du kannst beispielsweise sagen: "seiteHinzufügen" oder "Hilfe".` + voiceScannerClient.getcurrentResult()?.message)
       .getResponse();
   },
 };
