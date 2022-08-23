@@ -14,7 +14,6 @@ const authToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiIzIiwidXVp
 
 class VoiceScannerClient {
   constructor() {
-    this.isScanning = false;
     this.currentResult = false;
     this.filename = "";
     this.extension = "";
@@ -197,8 +196,7 @@ class VoiceScannerClient {
   async isAbleToScan() {
     await this.updateStatus();
     if (!this.status) return false;
-
-    if (this.status.isScanning) return false;
+    if (this.status.isScanning != false) return false;
     if (this.status.currentState == "initialized") return true;
     if (this.status.currentState == "ready") return true;
     return false;
