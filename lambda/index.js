@@ -322,7 +322,7 @@ const AddPageIntentHandler = {
       
     }
     
-    voiceScannerClient.addPage();
+    voiceScannerClient.addPage().then();
     let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/30s.mp3'/>`;
     let speakOutput = `Eine Seite wird gescannt. Dies kann bis zu 30 Sekunden dauern. ${audioFile} Möchtest du eine weitere Seite hinzufügen?`;
     setState(handlerInput, "SeiteHinzufuegen");
