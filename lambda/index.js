@@ -14,7 +14,6 @@ const authToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiIzIiwidXVp
 class VoiceScannerClient {
   constructor() {
     this.isScanning = false;
-
   }
 
   async init() {
