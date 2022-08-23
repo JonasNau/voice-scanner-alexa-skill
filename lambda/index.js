@@ -116,7 +116,7 @@ const LaunchRequestHandler = {
 
     let result = await voiceScannerClient.init();
 
-    const speakOutput = JSON.stringify(result);
+    const speakOutput = result.message;
 
     //const speakOutput =
       'Willkommen beim Stimmen Scanner. Du kannst beispielsweise sagen: "starte Scanner" oder "Hilfe". Was möchtest du?';
