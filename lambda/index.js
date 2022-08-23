@@ -417,22 +417,22 @@ exports.handler = (event, context, callback) => {
     .lambda()(event, context, callback);
 }
 
- exports.handler = function(event, context, callback) {
-  context.callbackWaitsForEmptyEventLoop = false;
- }
+//  exports.handler = function(event, context, callback) {
+//   context.callbackWaitsForEmptyEventLoop = false;
+//  }
  
 
-exports.handler = Alexa.SkillBuilders.custom()
-  .addRequestHandlers(
-    LaunchRequestHandler,
-    HelloWorldIntentHandler,
-    HelpIntentHandler,
-    CancelAndStopIntentHandler,
-    SessionEndedRequestHandler,
-    AddPageIntentHandler,
-    AllIntentHandler
-  )
-  .addErrorHandlers(ErrorHandler)
-  .withCustomUserAgent("jonas/voice-scanner/v1.0")
-  .lambda();
+// exports.handler = Alexa.SkillBuilders.custom()
+//   .addRequestHandlers(
+//     LaunchRequestHandler,
+//     HelloWorldIntentHandler,
+//     HelpIntentHandler,
+//     CancelAndStopIntentHandler,
+//     SessionEndedRequestHandler,
+//     AddPageIntentHandler,
+//     AllIntentHandler
+//   )
+//   .addErrorHandlers(ErrorHandler)
+//   .withCustomUserAgent("jonas/voice-scanner/v1.0")
+//   .lambda();
 
