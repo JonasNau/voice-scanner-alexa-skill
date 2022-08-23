@@ -286,7 +286,7 @@ const LaunchRequestHandler = {
     //Initialisierte Voice Scanner
      let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/18s.mp3'/>`;
      try {
-      await callDirectiveService(handlerInput, `v1 Willkommen beim Stimmen Scanner. Ich initialisiere den Scanner. ${audioFile}`);
+      await callDirectiveService(handlerInput, `v2 Willkommen beim Stimmen Scanner. Ich initialisiere den Scanner. ${audioFile}`);
      } catch (e) {
       console.error(e);
      }
@@ -311,9 +311,7 @@ const LaunchRequestHandler = {
 
 const AddPageIntentHandler = {
   canHandle(handlerInput) {
-    return (
-      (Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" ) && (Alexa.getIntentName(handlerInput.requestEnvelope) === "AddPageIntent")
-    );
+    return false;
   },
   async handle(handlerInput) {
     clearState(handlerInput);
