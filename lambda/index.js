@@ -15,6 +15,9 @@ class VoiceScannerClient {
   constructor() {
     this.isScanning = false;
     this.currentResult = false;
+    this.getcurrentResult = () => {
+      return this.currentResult;
+    }
   }
 
   async init() {
@@ -132,7 +135,7 @@ const LaunchRequestHandler = {
 
     return handlerInput.responseBuilder
       .speak(speakOutput)
-      .reprompt(voiceScannerClient.currentResult?.message)
+      .reprompt(voiceScannerClient.getcurrentResult)
       .getResponse();
   },
 };
