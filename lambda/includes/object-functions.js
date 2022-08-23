@@ -251,6 +251,9 @@ function isValidJSON(json) {
   if (isJSON_Object(json)) {
     return true;
   }
+  if (json instanceof Object) {
+    return true;
+  }
   return false;
 }
 
