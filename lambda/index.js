@@ -181,7 +181,7 @@ class VoiceScannerClient {
         resolve(true);
         return;
       }
-      this.status = response
+      this.status = response;
       resolve(true);
     })
   }
@@ -194,12 +194,14 @@ class VoiceScannerClient {
   }
 
   async isAbleToScan() {
-    await this.updateStatus();
-    if (!this.status) return false;
-    if (this.status.isScanning != false) return false;
-    if (this.status.currentState == "initialized") return true;
-    if (this.status.currentState == "ready") return true;
-    return false;
+    return new Promise(async (resolve, reject) => {
+      await this.updateStatus();
+      if (!this.status) {resolve(false); return};
+      if (this.status.isScanning != false) {resolve(false); return};
+      if (this.status.currentState == "initialized") {resolve(true); return};
+      if (this.status.currentState == "ready") {resolve(true); return};
+      resolve(false);
+    }) 
   }
 
 }
