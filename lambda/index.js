@@ -575,7 +575,7 @@ exports.handler = (event, context, callback) => {
       SessionEndedRequestHandler,
       AddPageIntentHandler,
       AllIntentHandler
-    )
+    ).withApiClient(new Alexa.DefaultApiClient())
     .addErrorHandlers(ErrorHandler)
     .withCustomUserAgent("jonas/voice-scanner/v1.0")
     .lambda()(event, context, callback);
