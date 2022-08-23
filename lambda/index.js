@@ -561,7 +561,7 @@ const RestartScannerIntent = {
 function setState(handlerInput, currentState) {
   const sessionAttributes =
     handlerInput.attributesManager.getSessionAttributes();
-    sessionAttributes.questionAsked = currentState;
+    sessionAttributes.currentState = currentState;
     handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
 }
 
