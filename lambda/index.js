@@ -318,6 +318,7 @@ const AddPageIntentHandler = {
    if ((handlerInput.attributesManager.getSessionAttributes().currentState === "SeiteHinzufuegen") && (Alexa.getIntentName(handlerInput.requestEnvelope) === "AMAZON.YesIntent")) {
     return true;
    }
+   return false;
   },
   async handle(handlerInput) {
     clearState(handlerInput);
