@@ -21,15 +21,9 @@ class VoiceScannerClient {
 
    async init() {
     return new Promise(async (resolve, reject) => {
-      let dataToSend = {filename: "Dateiname", extension: "pdf"};
-      let dataString = JSON.stringify(dataToSend);
       let response = await httpRequest({
         url: "/init",
         method: "post",
-        headers: {
-          "Content-Type": "application/json",
-          "Content-Length": Buffer.byteLength(dataString),
-        },
         timeout: 0, //Some requests recieve only after the scanner is done -> 20 Seconds should be enough
         body: false,
         params: false, //For Get Request
@@ -39,14 +33,17 @@ class VoiceScannerClient {
       if (response === false) {
         this.currentResult = {error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."};
         resolve({error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."});
+        return;
       }
       if (response.error) {
-        this.currentResult = {error: true, message: response.message}
+        this.currentResult = {error: true, message: response.message};
         resolve({error: true, message: response.message});
+        return;
       }
   
       this.currentResult = {error: false, message: response.message};
       resolve({error: false, message: response.message});
+      return;
     })
    
   }
@@ -65,14 +62,17 @@ class VoiceScannerClient {
       if (response === false) {
         this.currentResult = {error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."};
         resolve({error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."});
+        return;
       }
       if (response.error) {
         this.currentResult = {error: true, message: response.message}
         resolve({error: true, message: response.message});
+        return;
       }
   
       this.currentResult = {error: false, message: response.message};
       resolve({error: false, message: response.message});
+      return;
     })
   }
 
@@ -90,14 +90,17 @@ class VoiceScannerClient {
       if (response === false) {
         this.currentResult = {error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."};
         resolve({error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."});
+        return;
       }
       if (response.error) {
         this.currentResult = {error: true, message: response.message}
         resolve({error: true, message: response.message});
+        return;
       }
   
       this.currentResult = {error: false, message: response.message};
       resolve({error: false, message: response.message});
+      return;
     })
   }
 
@@ -121,14 +124,17 @@ class VoiceScannerClient {
       if (response === false) {
         this.currentResult = {error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."};
         resolve({error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."});
+        return;
       }
       if (response.error) {
         this.currentResult = {error: true, message: response.message}
         resolve({error: true, message: response.message});
+        return;
       }
   
       this.currentResult = {error: false, message: response.message};
       resolve({error: false, message: response.message});
+      return;
     })
   }
 
