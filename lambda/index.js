@@ -196,6 +196,7 @@ const CancelAndStopIntentHandler = {
  * */
 const FallbackIntentHandler = {
   canHandle(handlerInput) {
+    return false;
     return (
       Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" &&
       Alexa.getIntentName(handlerInput.requestEnvelope) ===
