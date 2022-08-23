@@ -313,16 +313,16 @@ const AddPageIntentHandler = {
   },
   async handle(handlerInput) {
     clearState(handlerInput);
-    if (!await voiceScannerClient.isAbleToScan()) {
-      let speakOutput = `Ein Fehler ist aufgetreten. `; //${voiceScannerClient.currentResult?.message ? voiceScannerClient.currentResult.message : "Versuche es erneut."}
-      return handlerInput.responseBuilder
-      .speak(speakOutput)
-      .reprompt(speakOutput)
-      .getResponse();
+    // if (!await voiceScannerClient.isAbleToScan()) {
+    //   let speakOutput = `Ein Fehler ist aufgetreten. `; //${voiceScannerClient.currentResult?.message ? voiceScannerClient.currentResult.message : "Versuche es erneut."}
+    //   return handlerInput.responseBuilder
+    //   .speak(speakOutput)
+    //   .reprompt(speakOutput)
+    //   .getResponse();
       
-    }
+    // }
     
-    voiceScannerClient.addPage().then();
+    voiceScannerClient.addPage()
     let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/30s.mp3'/>`;
     let speakOutput = `Eine Seite wird gescannt. Dies kann bis zu 30 Sekunden dauern. ${audioFile} Möchtest du eine weitere Seite hinzufügen?`;
     setState(handlerInput, "SeiteHinzufuegen");
