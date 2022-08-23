@@ -228,6 +228,9 @@ function isObject(tocheck) {
 
 //Json
 function makeJSON(string) {
+  if (typeof json === 'object') {
+    return string;
+  }
   try {
     if (!isValidJSON(string)) {
       return false;
