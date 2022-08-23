@@ -391,6 +391,12 @@ function clearQuestion(handlerInput) {
  * payloads to the handlers above. Make sure any new handlers or interceptors you've
  * defined are included below. The order matters - they're processed top to bottom
  * */
+
+ exports.handler = function(event, context, callback) {
+  context.callbackWaitsForEmptyEventLoop = false
+ }
+ 
+
 exports.handler = Alexa.SkillBuilders.custom()
   .addRequestHandlers(
     LaunchRequestHandler,
@@ -405,7 +411,3 @@ exports.handler = Alexa.SkillBuilders.custom()
   .withCustomUserAgent("jonas/voice-scanner/v1.0")
   .lambda();
 
-  exports.handler = function(event, context, callback) {
-    context.callbackWaitsForEmptyEventLoop = false
-   }
-   
