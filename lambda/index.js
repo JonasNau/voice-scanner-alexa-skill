@@ -290,7 +290,7 @@ const LaunchRequestHandler = {
     //Initialisierte Voice Scanner
      let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/18s.mp3'/>`;
 
-    await callDirectiveService(handlerInput, `v1 Willkommen beim Stimmen Scanner. Ich initialisiere den Scanner. ${audioFile}`);
+    await callDirectiveService(handlerInput, `v2 Willkommen beim Stimmen Scanner. Ich initialisiere den Scanner. ${audioFile}`);
 
     let result = await voiceScannerClient.init();
     if (result.error) {
@@ -321,16 +321,17 @@ const AddPageIntentHandler = {
   },
   async handle(handlerInput) {
     clearState(handlerInput);
-    if (!await voiceScannerClient.isAbleToScan()) {
+
+    let isAbleToScan = await voiceScannerClient.isAbleToScan()
+    if (!isAbleToScan) {
       let speakOutput = `Ein Fehler ist aufgetreten. `; //${voiceScannerClient.currentResult?.message ? voiceScannerClient.currentResult.message : "Versuche es erneut."}
       return handlerInput.responseBuilder
       .speak(speakOutput)
       .reprompt(speakOutput)
-      .getResponse();
-      
+      .getResponse(); 
     }
     
-    voiceScannerClient.addPage()
+    voiceScannerClient.addPage();
     let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/30s.mp3'/>`;
     let speakOutput = `Eine Seite wird gescannt. Dies kann bis zu 30 Sekunden dauern. ${audioFile} Möchtest du eine weitere Seite hinzufügen?`;
     setState(handlerInput, "SeiteHinzufuegen");
