@@ -88,7 +88,7 @@ async function httpRequest(
         headers: {'auth-token': authToken},
       });
 
-      instance.request(options).then((response) => {
+      instance.request(options).then(async(response) => {
         //data, status, statusText, headers, config, request
         if (response.status > 399) {
           console.error(response)
