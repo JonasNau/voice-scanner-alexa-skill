@@ -24,12 +24,12 @@ class VoiceScannerClient {
       method: "post",
       headers: {
         "Content-Type": "application/json",
-        "Content-Length": Buffer.byteLength(dataString),
+        "Content-Length": Buffer.byteLength(dataToSend),
       },
       timeout: 0, //Some requests recieve only after the scanner is done -> 20 Seconds should be enough
       body: false,
       params: false, //For Get Request
-      data: dataString
+      data: dataToSend
      });
     
     if (response === false) {
