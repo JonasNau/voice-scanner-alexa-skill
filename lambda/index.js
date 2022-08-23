@@ -312,7 +312,7 @@ const LaunchRequestHandler = {
 
 const AddPageIntentHandler = {
   canHandle(handlerInput) {
-    return ((Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest") && ((Alexa.getIntentName(handlerInput.requestEnvelope) === "AddPageIntent") || ((handlerInput.attributesManager.getSessionAttributes().currentState === "SeiteHinzufuegengen") && (Alexa.getIntentName(handlerInput.requestEnvelope) === "AMAZON.YesIntent"))))
+    return (Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" && (Alexa.getIntentName(handlerInput.requestEnvelope) === "AddPageIntent") || ((handlerInput.attributesManager.getSessionAttributes().currentState === "SeiteHinzufuegengen") && (Alexa.getIntentName(handlerInput.requestEnvelope) === "AMAZON.YesIntent")))
   },
   async handle(handlerInput) {
     clearState(handlerInput);
