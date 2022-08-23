@@ -27,7 +27,6 @@ class VoiceScannerClient {
         timeout: 0, //Some requests recieve only after the scanner is done -> 20 Seconds should be enough
         body: false,
         params: false, //For Get Request
-        data: dataString
        });
       
       if (response === false) {
@@ -56,7 +55,6 @@ class VoiceScannerClient {
         timeout: 5000, //Some requests recieve only after the scanner is done -> 20 Seconds should be enough
         body: false,
         params: false, //For Get Request
-        data: dataString
        });
       
       if (response === false) {
@@ -84,7 +82,6 @@ class VoiceScannerClient {
         timeout: 0, //Some requests recieve only after the scanner is done -> 20 Seconds should be enough
         body: false,
         params: false, //For Get Request
-        data: dataString
        });
       
       if (response === false) {
@@ -146,7 +143,6 @@ class VoiceScannerClient {
         timeout: 5000, //Some requests recieve only after the scanner is done -> 20 Seconds should be enough
         body: false,
         params: false, //For Get Request
-        data: dataString
        });
       
       if (response === false) {
@@ -177,7 +173,6 @@ class VoiceScannerClient {
         timeout: 0, //Some requests recieve only after the scanner is done -> 20 Seconds should be enough
         body: false,
         params: false, //For Get Request
-        data: dataString
        });
       
       if (response === false) {
@@ -301,7 +296,7 @@ const LaunchRequestHandler = {
       .speak(speakOutput)
       .getResponse();
     } else {
-      let speakOutput = `Du kannst beispielsweise sagen: "seiteHinzufügen" oder "Hilfe". Möchtest du eine Seite hinzufügen?`;
+      let speakOutput = `${result.message} Du kannst beispielsweise sagen: "seiteHinzufügen" oder "Hilfe". Möchtest du eine Seite hinzufügen?`;
       setState(handlerInput, "SeiteHinzufuegengen")
       return handlerInput.responseBuilder
       .speak(speakOutput)
