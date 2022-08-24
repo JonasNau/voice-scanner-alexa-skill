@@ -49,17 +49,9 @@ const LaunchRequestHandler = {
   async handle(handlerInput) {
     clearState(handlerInput);
     //Initialisierte Voice Scanner
-     let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/18s.mp3'/>`;
-
-     voiceScannerClient.init();
-    await timeout(5000);
-    //callDirectiveService(handlerInput, `v2 Willkommen beim Stimmen Scanner. Ich initialisiere den Scanner. ${audioFile}`);
+     //let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/18s.mp3'/>`;
+     callDirectiveService(handlerInput, `v2 Willkommen beim Stimmen Scanner. Ich initialisiere den Scanner.`);
     
-
-    return handlerInput.responseBuilder
-    .speak("5 Sekunden sind um").reprompt("Was möchest du?")
-    .getResponse();
-
     let result = await voiceScannerClient.init();
     if (result.error) {
       let speakOutput = `${result.message} Versuche es erneut.`;
@@ -83,37 +75,29 @@ const AddPageIntentHandler = {
     if ((Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest") && (Alexa.getIntentName(handlerInput.requestEnvelope) === "AddPageIntent")) {
       return true;
     }
-  //  if ((handlerInput.attributesManager.getSessionAttributes().currentState === "SeiteHinzufuegen") && (Alexa.getIntentName(handlerInput.requestEnvelope) === "AMAZON.YesIntent")) {
-  //   return true;
-  //  }
+   if ((handlerInput.attributesManager.getSessionAttributes().currentState === "SeiteHinzufuegen") && (Alexa.getIntentName(handlerInput.requestEnvelope) === "AMAZON.YesIntent")) {
+    return true;
+   }
   },
   async handle(handlerInput) {
     clearState(handlerInput);
 
-    // let isAbleToScan = await voiceScannerClient.isAbleToScan();
-    await voiceScannerClient.addPage();
-
-    return handlerInput.responseBuilder
-    .speak(JSON.stringify("Scanne..."))
-    .reprompt(JSON.stringify("Scanne..."))
-    .getResponse(); 
-
-    if (!isAbleToScan) {
-      let speakOutput = `Ein Fehler ist aufgetreten. `; //${voiceScannerClient.currentResult?.message ? voiceScannerClient.currentResult.message : "Versuche es erneut."}
+    let result = await voiceScannerClient.addPage();
+    
+    if (result.error) {
+      let speakOutput = `${result.message} Versuche es erneut.`;
       return handlerInput.responseBuilder
       .speak(speakOutput)
-      .reprompt(speakOutput)
-      .getResponse(); 
-    }
-    
-    voiceScannerClient.addPage();
-    let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/30s.mp3'/>`;
-    let speakOutput = `Eine Seite wird gescannt. Dies kann bis zu 30 Sekunden dauern. ${audioFile} Möchtest du eine weitere Seite hinzufügen?`;
-    setState(handlerInput, "SeiteHinzufuegen");
-    return handlerInput.responseBuilder
+      .getResponse();
+    } else {
+      let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/30s.mp3'/>`;
+      let speakOutput = `Eine Seite wird gescannt. Dies kann bis zu 30 Sekunden dauern. ${audioFile} Möchtest du eine weitere Seite hinzufügen?`; 
+      setState(handlerInput, "SeiteHinzufuegen")
+      return handlerInput.responseBuilder
       .speak(speakOutput)
       .reprompt("Möchtest du eine weitere Seite hinzufügen?")
       .getResponse();
+    }
   },
 };
 
@@ -358,7 +342,7 @@ const skillBuilder = Alexa.SkillBuilders.custom();
 
 exports.handler = (event, context, callback) => {
   // we need this so that async stuff will work better
-  context.callbackWaitsForEmptyEventLoop = false;
+  //context.callbackWaitsForEmptyEventLoop = false;
 
   // set up the skill with the new context
   return skillBuilder

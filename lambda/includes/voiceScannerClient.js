@@ -14,7 +14,7 @@ class VoiceScannerClient {
   async init() {
     return new Promise(async (resolve, reject) => {
       let response = await httpRequest({
-        url: "/init",
+        url: "/initAsync",
         method: "post",
         timeout: 0, //Some requests recieve only after the scanner is done -> 20 Seconds should be enough
         body: false,
@@ -77,27 +77,45 @@ class VoiceScannerClient {
     });
   }
 
-  addPage() {
-    try {
-      httpRequest({
-        url: "/addPage",
+  async addPageAsync() {
+    return new Promise(async (resolve, reject) => {
+      let response = await httpRequest({
+        url: "/addPageAsync",
         method: "post",
         timeout: 30000, //Some requests recieve only after the scanner is done -> 20 Seconds should be enough
         body: false,
         params: false, //For Get Request
       });
-    } catch (e) {
 
-    }
-      return true;
+      if (response === false) {
+        this.currentResult = {
+          error: true,
+          message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut.",
+        };
+        resolve({
+          error: true,
+          message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut.",
+        });
+        return;
+      }
+      if (response.error) {
+        this.currentResult = { error: true, message: response.message };
+        resolve({ error: true, message: response.message });
+        return;
+      }
+
+      this.currentResult = { error: false, message: response.message };
+      resolve({ error: false, message: response.message });
+      return;
+    });
   }
 
-  async convertAndUpload(filename, extension) {
+  async convertAndUploadAsync(filename, extension) {
     return new Promise(async (resolve, reject) => {
       let dataToSend = { filename: filename, extension: extension };
       let dataString = JSON.stringify(dataToSend);
       let response = await httpRequest({
-        url: "/convertAndUpload",
+        url: "/convertAndUploadAsync",
         method: "post",
         headers: {
           "Content-Type": "application/json",
