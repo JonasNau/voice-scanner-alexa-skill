@@ -140,7 +140,7 @@ const SavePagesIntentHandler = {
   },
   async handle(handlerInput) {
     clearState(handlerInput);
-    const speakOutput = `Wenn du keine weitere Seite hinzufügen möchtest sage "speichern" Wenn du doch noch eine Seite hinzufügen möchtest sage "Seite hinzufügen"`;
+    const speakOutput = `Wenn du keine weitere Seite hinzufügen möchtest, sage "speichern". Wenn du doch noch eine Seite hinzufügen möchtest, sage "Seite hinzufügen"`;
     setState(handlerInput, "SeiteHinzufuegen")
     return (
       handlerInput.responseBuilder
@@ -156,7 +156,7 @@ const SavePagesIntentHandler = {
 const FallbackIntentHandler = {
   canHandle(handlerInput) {
     return (
-      Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" || Alexa.getIntentName(handlerInput.requestEnvelope) === "AMAZON.FallbackIntent"
+      Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" || Alexa.getIntentName(handlerInput.requestEnvelope) === "AMAZON.FallbackIntent" && !Alexa.getDialogState(handlerInput.requestEnvelope) === "COMPLETED"
   );
   },
   async handle(handlerInput) {
@@ -204,6 +204,7 @@ const CancelAndStopIntentHandler = {
   },
   handle(handlerInput) {
     clearState(handlerInput);
+    await voiceScannerClient.clear();
     const speakOutput = "Tschau!";
 
     return handlerInput.responseBuilder.speak(speakOutput).getResponse();
