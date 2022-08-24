@@ -77,7 +77,7 @@ class VoiceScannerClient {
     });
   }
 
-  async addPage() {
+  addPage() {
       httpRequest({
         url: "/addPage",
         method: "post",
