@@ -110,7 +110,7 @@ const SavePagesIntentHandler = {
   async handle(handlerInput) {
     clearState(handlerInput);
 
-    const recognizeExtension = (extension => {
+    const recognizeExtension = ((extension) => {
       if (!extension) return "pdf";
       let checkString = extension.replace(".", "").replace(" ", "");
       let checkArray = checkString.split("");
@@ -118,9 +118,9 @@ const SavePagesIntentHandler = {
       let png = ["p", "n"];
       let jpg = ["j", "p"];
 
-      if (pdf.every(currentChar => checkArray.includes(currentChar))) return "pdf";
-      if (png.every(currentChar => checkArray.includes(currentChar))) return "png";
-      if (jpg.every(currentChar => checkArray.includes(currentChar))) return "jpg";
+      if (pdf.every(currentChar => {return checkArray.includes(currentChar);})) return "pdf";
+      if (png.every(currentChar => {return checkArray.includes(currentChar);})) return "png";
+      if (jpg.every(currentChar => {return checkArray.includes(currentChar);})) return "jpg";
       return "pdf";
     })
 
