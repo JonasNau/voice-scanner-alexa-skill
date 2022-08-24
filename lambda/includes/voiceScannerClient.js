@@ -78,6 +78,7 @@ class VoiceScannerClient {
   }
 
   addPage() {
+    try {
       httpRequest({
         url: "/addPage",
         method: "post",
@@ -85,6 +86,9 @@ class VoiceScannerClient {
         body: false,
         params: false, //For Get Request
       });
+    } catch (e) {
+
+    }
       return true;
   }
 
