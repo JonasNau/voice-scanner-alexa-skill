@@ -296,9 +296,10 @@ const ErrorHandler = {
   },
   handle(handlerInput, error) {
     let jsonString = JSON.stringify(error);
+    console.log("===== ERROR =====")
+    console.log(error);
+    console.log(`~~~~ Error handled: ${error.message} - ${jsonString}`);
     const speakOutput = `Sorry, I had trouble doing what you asked. Please try again. ${error.message}`;
-    console.dir(`~~~~ Error handled: ${error.message} - ${jsonString}`);
-
     return handlerInput.responseBuilder
       .speak(speakOutput)
       .reprompt(speakOutput)
@@ -359,11 +360,29 @@ function clearState(handlerInput) {
   handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
 }
 
+
+
 /**
- * This handler acts as the entry point for your skill, routing all request and response
- * payloads to the handlers above. Make sure any new handlers or interceptors you've
- * defined are included below. The order matters - they're processed top to bottom
- * */
+ * Request Interceptor to log the request sent by Alexa
+ */
+ const LogRequestInterceptor = {
+  process(handlerInput) {
+    // Log Request
+    console.log("==== REQUEST ======");
+    console.log(JSON.stringify(handlerInput.requestEnvelope, null, 2));
+  }
+}
+/**
+ * Response Interceptor to log the response made to Alexa
+ */
+const LogResponseInterceptor = {
+  process(handlerInput, response) {
+    // Log Response
+    console.log("==== RESPONSE ======");
+    console.log(JSON.stringify(response, null, 2));
+  }
+}
+
 
 
 // create a custom skill builder
@@ -387,6 +406,8 @@ exports.handler = (event, context, callback) => {
       FallbackIntentHandler
     ).withApiClient(new Alexa.DefaultApiClient())
     .addErrorHandlers(ErrorHandler)
+    .addRequestInterceptors(LogRequestInterceptor)
+    .addResponseInterceptors(LogResponseInterceptor)
     .withCustomUserAgent("jonas/voice-scanner/v1.0")
     .lambda()(event, context, callback);
 }
