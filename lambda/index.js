@@ -50,7 +50,7 @@ const LaunchRequestHandler = {
     clearState(handlerInput);
     //Initialisierte Voice Scanner
      //let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/18s.mp3'/>`;
-     callDirectiveService(handlerInput, `v2 Willkommen beim Stimmen Scanner. Ich initialisiere den Scanner.`);
+     callDirectiveService(handlerInput, `Willkommen beim Stimmen Scanner. Ich initialisiere den Scanner.`);
     
     let result = await voiceScannerClient.init();
     if (result.error) {
@@ -147,9 +147,7 @@ const SavePagesIntentHandler = {
   },
 };
 
-
-
- const AddPageNoIntentHandler = {
+const AddPageNoIntentHandler = {
   canHandle(handlerInput) {
       if ((handlerInput.attributesManager.getSessionAttributes().currentState === "SeiteHinzufuegen") && (Alexa.getIntentName(handlerInput.requestEnvelope) === "AMAZON.NoIntent")) {
         return true;
@@ -168,6 +166,63 @@ const SavePagesIntentHandler = {
     );
   },
 };
+
+
+const RestartIntentHandler = {
+  canHandle(handlerInput) {
+    if ((Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest") && (Alexa.getIntentName(handlerInput.requestEnvelope) === "RestartIntent")) {
+      return true;
+    }
+    return false;
+  },
+  async handle(handlerInput) {
+    clearState(handlerInput);
+
+    let result = await voiceScannerClient.clear();
+    if (result.error) {
+      let speakOutput = `${result.message} Versuche es erneut.`;
+      return handlerInput.responseBuilder
+      .speak(speakOutput)
+      .getResponse();
+    } else {
+      let speakOutput = result.message; 
+      return handlerInput.responseBuilder
+      .speak(speakOutput)
+      .reprompt("Möchtest du eine weitere Seite hinzufügen?")
+      .getResponse();
+    }
+  },
+};
+
+const StatusIntentHandler = {
+  canHandle(handlerInput) {
+    if ((Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest") && (Alexa.getIntentName(handlerInput.requestEnvelope) === "StatusIntent")) {
+      return true;
+    }
+    return false;
+  },
+  async handle(handlerInput) {
+    clearState(handlerInput);
+
+    let result = await voiceScannerClient.getNumberOfPages();
+    if (result === false) {
+      let speakOutput = `Konnte die Anzahl der Seiten nicht ermitteln. Versuche es erneut.`;
+      return handlerInput.responseBuilder
+      .speak(speakOutput)
+      .getResponse();
+    } else {
+      let speakOutput = `Bisher hast du  <say-as interpret-as="digits">${parseInt(result)}</say-as> Seiten gescannt.`
+      return handlerInput.responseBuilder
+      .speak(speakOutput)
+      .reprompt("Möchtest du eine weitere Seite hinzufügen?")
+      .getResponse();
+    }
+  },
+};
+
+
+
+
 
 
 
@@ -329,46 +384,6 @@ const ErrorHandler = {
   },
 };
 
-//My application
-const StartIntentHandler = {
-  canHandle(handlerInput) {
-    return (
-      Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" &&
-      Alexa.getIntentName(handlerInput.requestEnvelope) === "StartIntent"
-    );
-  },
-  handle(handlerInput) {
-    const speakOutput = "Scanner ist bereit. Möchtest du das Scannen beginnen?";
-    return handlerInput.responseBuilder
-      .speak(speakOutput)
-      .reprompt(speakOutput)
-      .getResponse();
-  },
-};
-
-
-//
-
-
-
-const RestartScannerIntent = {
-  canHandle(handlerInput) {
-    return (
-      Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" &&
-      Alexa.getIntentName(handlerInput.requestEnvelope) === "ResetScannerIntent"
-    );
-  },
-  handle(handlerInput) {
-    //Scanner resetten
-    let speakOutput = "Willst du eine Seite hinzufügen?";
-    setQuestion(handlerInput, "DoYouWantToAddAPage");
-    return handlerInput.responseBuilder
-      .speak(speakOutput)
-      .reprompt(speakOutput)
-      .getResponse();
-  },
-};
-
 function setState(handlerInput, currentState) {
   const sessionAttributes =
     handlerInput.attributesManager.getSessionAttributes();
@@ -425,6 +440,8 @@ exports.handler = (event, context, callback) => {
       AddPageIntentHandler,
       SavePagesIntentHandler,
       AddPageNoIntentHandler,
+      RestartIntentHandler,
+      StatusIntentHandler,
       FallbackIntentHandler
     ).withApiClient(new Alexa.DefaultApiClient())
     .addErrorHandlers(ErrorHandler)
