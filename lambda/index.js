@@ -114,15 +114,15 @@ const SavePagesIntentHandler = {
       if (!extension) return "pdf";
       let checkString = extension.replace(".", "").replace(" ", "");
       let checkArray = checkString.split("");
-      let pdf = ["p", "d"];
-      let png = ["p", "n"];
-      let png2 = ["b", "n"]
-      let jpg = ["j", "p"];
 
-      if (pdf.every(currentChar => {return checkArray.includes(currentChar);})) return "pdf";
-      if (png.every(currentChar => {return checkArray.includes(currentChar);})) return "png";
-      if (png2.every(currentChar => {return checkArray.includes(currentChar);})) return "png";
-      if (jpg.every(currentChar => {return checkArray.includes(currentChar);})) return "jpg";
+      const extensions = {
+        "pdf": [["p", "d"]],
+        "png": [["p", "n"]],
+        "jpg": [["j", "p"]]
+      }
+     for (const [ext, possibleChars] of Object.entries(extensions)) {
+        if (possibleChars.every(currentChar => {return checkArray.includes(currentChar);})) return ext;
+     }
       return "pdf";
     })
 
