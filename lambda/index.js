@@ -244,6 +244,10 @@ const SessionEndedRequestHandler = {
     );
   },
   async handle(handlerInput) {
+    const reason = handlerInput.requestEnvelope.request.reason;
+    console.log("==== SESSION ENDED WITH REASON ======");
+    console.log(reason); 
+    
     console.log(
       `~~~~ Session ended: ${JSON.stringify(handlerInput.requestEnvelope)}`
     );
