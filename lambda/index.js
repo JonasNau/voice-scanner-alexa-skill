@@ -82,8 +82,7 @@ const AddPageIntentHandler = {
   async handle(handlerInput) {
     clearState(handlerInput);
 
-    let result = await voiceScannerClient.addPage();
-    
+    let result = await voiceScannerClient.addPageAsync();
     if (result.error) {
       let speakOutput = `${result.message} Versuche es erneut.`;
       return handlerInput.responseBuilder
