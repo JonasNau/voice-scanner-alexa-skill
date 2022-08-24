@@ -296,7 +296,7 @@ const LaunchRequestHandler = {
     
     await voiceScannerClient.init();
     return handlerInput.responseBuilder
-    .speak("5 Sekunden sind um")
+    .speak("5 Sekunden sind um").reprompt("Was möchest du?")
     .getResponse();
 
     let result = await voiceScannerClient.init();
