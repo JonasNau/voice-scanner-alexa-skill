@@ -101,6 +101,37 @@ const AddPageIntentHandler = {
 };
 
 
+const SavePagesIntentHandler = {
+  canHandle(handlerInput) {
+    if ((Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest") && (Alexa.getIntentName(handlerInput.requestEnvelope) === "SavePagesIntent")) {
+      return true;
+    }
+   if ((handlerInput.attributesManager.getSessionAttributes().currentState === "SeiteHinzufuegen") && (Alexa.getIntentName(handlerInput.requestEnvelope) === "AMAZON.NoIntent")) {
+    return true;
+   }
+  },
+  async handle(handlerInput) {
+    clearState(handlerInput);
+
+    const filename = Alexa.getSlotValue(handlerInput.requestEnvelope, "dateiname");
+    const extension = Alexa.getSlotValue(handlerInput.requestEnvelope, "dateierweiterung");
+
+    let result = await voiceScannerClient.convertAndUploadAsync(filename, extension);
+    if (result.error) {
+      let speakOutput = `${result.message} Versuche es erneut.`;
+      return handlerInput.responseBuilder
+      .speak(speakOutput)
+      .getResponse();
+    } else {
+      //let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/18s.mp3'/>`;
+      let speakOutput = `Die Dateien wurden erfolgreich auf den Server bei Dateien/Dokumente/Scans/VoiceScanner hochgeladen. Wenn du noch ein Dokument einscannen möchtest, dann sage "starte stimmen scanner"`; 
+      return handlerInput.responseBuilder
+      .speak(speakOutput)
+      .getResponse();
+    }
+  },
+};
+
 
 const AllIntentHandler = {
   canHandle(handlerInput) {
@@ -109,6 +140,7 @@ const AllIntentHandler = {
   );
   },
   async handle(handlerInput) {
+    clearState(handlerInput);
     const speakOutput = `Das habe ich nicht verstanden. Du kannst sagen "seiteHinzufügen" oder "Hilfe". Was möchtest du?`;
 
     return (
@@ -130,6 +162,7 @@ const HelpIntentHandler = {
     );
   },
   handle(handlerInput) {
+    clearState(handlerInput);
     const speakOutput =
       'Mit diesem Skill kannst du durch deine Stimme einscannen und die Datei wird automatisch auf den Server hochgeladen. Wenn du sagst: "seiteHinzufügen", dann beginne ich mit scannen. Was möchtest du?';
 
@@ -151,6 +184,7 @@ const CancelAndStopIntentHandler = {
     );
   },
   handle(handlerInput) {
+    clearState(handlerInput);
     const speakOutput = "Tschau!";
 
     return handlerInput.responseBuilder.speak(speakOutput).getResponse();
@@ -352,6 +386,7 @@ exports.handler = (event, context, callback) => {
       CancelAndStopIntentHandler,
       SessionEndedRequestHandler,
       AddPageIntentHandler,
+      SavePagesIntentHandler,
       AllIntentHandler
     ).withApiClient(new Alexa.DefaultApiClient())
     .addErrorHandlers(ErrorHandler)
