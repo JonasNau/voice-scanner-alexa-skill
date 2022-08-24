@@ -103,7 +103,7 @@ const AddPageIntentHandler = {
 
 const SavePagesIntentHandler = {
   canHandle(handlerInput) {
-    if ((Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest") && (Alexa.getIntentName(handlerInput.requestEnvelope) === "SavePagesIntent")) {
+    if ((Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest") && (Alexa.getIntentName(handlerInput.requestEnvelope) === "SavePagesIntent") && Alexa.getDialogState(handlerInput.requestEnvelope) === "COMPLETED") {
       return true;
     }
   },
@@ -160,6 +160,7 @@ const FallbackIntentHandler = {
   );
   },
   async handle(handlerInput) {
+    clearState(handlerInput);
     const speakOutput = `Das habe ich nicht verstanden. Du kannst sagen "seiteHinzufügen" oder "Hilfe". Was möchtest du?`;
     return (
       handlerInput.responseBuilder
