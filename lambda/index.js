@@ -290,7 +290,11 @@ const LaunchRequestHandler = {
     //Initialisierte Voice Scanner
      let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/18s.mp3'/>`;
 
-    await callDirectiveService(handlerInput, `v2 Willkommen beim Stimmen Scanner. Ich initialisiere den Scanner. ${audioFile}`);
+    //callDirectiveService(handlerInput, `v2 Willkommen beim Stimmen Scanner. Ich initialisiere den Scanner. ${audioFile}`);
+    await timeout(5000);
+    return handlerInput.responseBuilder
+    .speak("5 Sekunden sind um")
+    .getResponse();
 
     let result = await voiceScannerClient.init();
     if (result.error) {
@@ -502,6 +506,13 @@ const SessionEndedRequestHandler = {
  * stating the request handler chain is not found, you have not implemented a handler for
  * the intent being invoked or included it in the skill builder below
  * */
+
+async function timeout(ms) {
+  return new Promise(async (resolve, reject) => {
+    setTimeout(resolve(true), ms);
+  })
+}
+
 const ErrorHandler = {
   canHandle() {
     return true;
