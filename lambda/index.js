@@ -156,7 +156,7 @@ const SavePagesIntentHandler = {
 const FallbackIntentHandler = {
   canHandle(handlerInput) {
     return (
-      Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" || Alexa.getIntentName(handlerInput.requestEnvelope) === "AMAZON.FallbackIntent" && !Alexa.getDialogState(handlerInput.requestEnvelope) === "COMPLETED"
+      Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" || Alexa.getIntentName(handlerInput.requestEnvelope) === "AMAZON.FallbackIntent"
   );
   },
   async handle(handlerInput) {
@@ -202,7 +202,7 @@ const CancelAndStopIntentHandler = {
           "AMAZON.StopIntent")
     );
   },
-  handle(handlerInput) {
+  async handle(handlerInput) {
     clearState(handlerInput);
     await voiceScannerClient.clear();
     const speakOutput = "Tschau!";
