@@ -91,7 +91,7 @@ const AddPageIntentHandler = {
     clearState(handlerInput);
 
     // let isAbleToScan = await voiceScannerClient.isAbleToScan();
-    voiceScannerClient.addPage();
+    await voiceScannerClient.addPage();
 
     return handlerInput.responseBuilder
     .speak(JSON.stringify("Scanne..."))

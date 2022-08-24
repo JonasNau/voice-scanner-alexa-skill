@@ -78,13 +78,14 @@ class VoiceScannerClient {
   }
 
   async addPage() {
-      let response = await httpRequest({
+      httpRequest({
         url: "/addPage",
         method: "post",
         timeout: 30000, //Some requests recieve only after the scanner is done -> 20 Seconds should be enough
         body: false,
         params: false, //For Get Request
       });
+      return true;
   }
 
   async convertAndUpload(filename, extension) {
