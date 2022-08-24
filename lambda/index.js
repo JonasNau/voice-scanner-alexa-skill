@@ -6,253 +6,14 @@
  * */
 const Alexa = require("ask-sdk-core");
 
+
 //Custom Modules
 const axios = require('axios').default;
 const objectFunctions = require("./includes/object-functions");
+const { voiceScannerClient } = require("./includes/voiceScannerClient")
 
 const authToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiIzIiwidXVpZCI6ImM2OGNlZmJjLTIzNjQtNDhhYi1hMzkwLWFkNjcwY2E2ZWJmZCIsInVzZXJuYW1lIjoiSm9uYXMiLCJwYXNzd29yZCI6IiQyYSQxMCRwL0NIY3gyN1U1WjhpNEQ2M3l6bkVlaGc5Rno3Z0xiTjVHTzJuWFExODRLejVNbWFja0Y4VyIsImNyZWF0ZWQiOiJGcmkgQXVnIDE5IDIwMjIgMjA6MzY6NDEgR01UKzAyMDAgKE1pdHRlbGV1cm9ww6Rpc2NoZSBTb21tZXJ6ZWl0KSIsImxhc3RMb2dpbiI6bnVsbCwibGFzdFB3ZENoYW5nZSI6bnVsbCwiZ3JvdXBzIjpbImFkbWluIl0sInBlcm1pc3Npb25zIjp7fSwiaXNGb3JiaWRkZW5UbyI6W10sImV4cGlyZXMiOiJuZXZlciIsImlhdCI6MTY2MTE2ODQwMH0.lLARdA-oRfDlNzNS1wlhvAOQgLXPj1Mxyj333g9tXjM";
 
-
-async function httpRequest(
-  options = {
-    url: "/init",
-    method: "post",
-    headers: {
-      "Content-Type": "application/json",
-      "Content-Length": 0,
-    },
-    timeout: 0, //Some requests recieve only after the scanner is done -> 20 Seconds should be enough
-    body: false,
-    params: false, //For Get Request
-    data: JSON.stringify("{'username': 'test', 'password': 'sjfösdjflsdakjföads'}")
-}) {
-    return new Promise(async (resolve, reject) => {
-
-    
-      const instance = axios.create({
-        baseURL: 'http://wuschelcloud.synology.me:3000/api/voiceScanner',
-        timeout: 0,
-        headers: {'auth-token': authToken},
-      });
-
-      instance.request(options).then((response) => {
-        //data, status, statusText, headers, config, request
-        if (response.status > 399) {
-          console.error(response)
-          resolve({error: true, message: "Ein interner Fehler ist aufgetreten. Versuche es erneut."});
-          return;
-        }
-        if (objectFunctions.makeJSON(response.data)) {
-          let data = objectFunctions.makeJSON(response.data);
-          if (data.error == true) {resolve({error: true, message: data.message}); return;};
-          resolve(data);
-          return;
-        } else {
-          resolve({error: true, message: "Rückgabewert ist kein gültiges JSON. Versuche es erneut."});
-        }
-       
-      })
-          
-    })
-}
-
-class VoiceScannerClient {
-  constructor() {
-    this.currentResult = false;
-    this.filename = "";
-    this.extension = "";
-    this.status = false;
-  }
-
-   async init() {
-    return new Promise(async (resolve, reject) => {
-      let response = await httpRequest({
-        url: "/init",
-        method: "post",
-        timeout: 0, //Some requests recieve only after the scanner is done -> 20 Seconds should be enough
-        body: false,
-        params: false, //For Get Request
-       });
-      
-      if (response === false) {
-        this.currentResult = {error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."};
-        resolve({error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."});
-        return;
-      }
-      if (response.error) {
-        this.currentResult = {error: true, message: response.message};
-        resolve({error: true, message: response.message});
-        return;
-      }
-  
-      this.currentResult = {error: false, message: response.message};
-      resolve({error: false, message: response.message});
-      return;
-    })
-   
-  }
-
-  async clear() {
-    return new Promise(async (resolve, reject) => {
-      let response = await httpRequest({
-        url: "/clear",
-        method: "post",
-        timeout: 5000, //Some requests recieve only after the scanner is done -> 20 Seconds should be enough
-        body: false,
-        params: false, //For Get Request
-       });
-      
-      if (response === false) {
-        this.currentResult = {error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."};
-        resolve({error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."});
-        return;
-      }
-      if (response.error) {
-        this.currentResult = {error: true, message: response.message}
-        resolve({error: true, message: response.message});
-        return;
-      }
-  
-      this.currentResult = {error: false, message: response.message};
-      resolve({error: false, message: response.message});
-      return;
-    })
-  }
-
-  async addPage() {
-    return new Promise(async (resolve, reject) => {
-      let response = await httpRequest({
-        url: "/addPage",
-        method: "post",
-        timeout: 30000, //Some requests recieve only after the scanner is done -> 20 Seconds should be enough
-        body: false,
-        params: false, //For Get Request
-       });
-      
-      if (response === false) {
-        this.currentResult = {error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."};
-        resolve({error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."});
-        return;
-      }
-      if (response.error) {
-        this.currentResult = {error: true, message: response.message}
-        resolve({error: true, message: response.message});
-        return;
-      }
-  
-      this.currentResult = {error: false, message: response.message};
-      resolve({error: false, message: response.message});
-      return;
-    })
-  }
-
-  async convertAndUpload(filename, extension) {
-    return new Promise(async (resolve, reject) => {
-      let dataToSend = {filename: filename, extension: extension};
-      let dataString = JSON.stringify(dataToSend);
-      let response = await httpRequest({
-        url: "/convertAndUpload",
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-          "Content-Length": Buffer.byteLength(dataString),
-        },
-        timeout: 0, //Some requests recieve only after the scanner is done -> 20 Seconds should be enough
-        body: false,
-        params: false, //For Get Request
-        data: dataString
-       });
-      
-      if (response === false) {
-        this.currentResult = {error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."};
-        resolve({error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."});
-        return;
-      }
-      if (response.error) {
-        this.currentResult = {error: true, message: response.message}
-        resolve({error: true, message: response.message});
-        return;
-      }
-  
-      this.currentResult = {error: false, message: response.message};
-      resolve({error: false, message: response.message});
-      return;
-    })
-  }
-
-  async kill() {
-    return new Promise(async (resolve, reject) => {
-      let response = await httpRequest({
-        url: "/kill",
-        method: "post",
-        timeout: 5000, //Some requests recieve only after the scanner is done -> 20 Seconds should be enough
-        body: false,
-        params: false, //For Get Request
-       });
-      
-      if (response === false) {
-        this.currentResult = {error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."};
-        resolve({error: true, message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut."});
-      }
-      if (response.error) {
-        this.currentResult = {error: true, message: response.message}
-        resolve({error: true, message: response.message});
-      }
-  
-      this.currentResult = {error: false, message: response.message};
-      resolve({error: false, message: response.message});
-    })
-  }
-
-  async getNumberOfPages() {
-    await this.updateStatus();
-    if (!this.status) return 0;
-    return this.status.numberOfPages;
-  }
-
-  async updateStatus() {
-    return new Promise(async (resolve, reject) => {
-      let response = await httpRequest({
-        url: "/status",
-        method: "post",
-        timeout: 0, //Some requests recieve only after the scanner is done -> 20 Seconds should be enough
-        body: false,
-        params: false, //For Get Request
-       });
-      
-      if (response === false) {
-        this.status = false;
-        resolve(true);
-        return;
-      }
-      this.status = response;
-      resolve(true);
-    })
-  }
-
-  async canConvertAndUploadFiles() {
-    await this.updateStatus();
-    if (!this.status) return false;
-    if (!this.status.numberOfPages > 0) return false;
-    return true;
-  }
-
-  async isAbleToScan() {
-    return new Promise(async (resolve, reject) => {
-      await this.updateStatus();
-      if (!this.status) {resolve(false); return};
-      /* if (this.status.isScanning != false) {resolve(false); return}; */
-      if (this.status.currentState === "initialized") {resolve(true); return;};
-      if (this.status.currentState === "ready") {resolve(true); return;};
-      resolve(false);
-    }) 
-  }
-
-}
-let voiceScannerClient = false;
-
-
-  
 
 function callDirectiveService(handlerInput, speakOutput) {
   // Call Alexa Directive Service.
@@ -286,7 +47,6 @@ const LaunchRequestHandler = {
     );
   },
   async handle(handlerInput) {
-    voiceScannerClient = new VoiceScannerClient();
     clearState(handlerInput);
     //Initialisierte Voice Scanner
      let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/18s.mp3'/>`;
@@ -294,7 +54,7 @@ const LaunchRequestHandler = {
     await timeout(5000);
     //callDirectiveService(handlerInput, `v2 Willkommen beim Stimmen Scanner. Ich initialisiere den Scanner. ${audioFile}`);
     
-    await voiceScannerClient.init();
+     voiceScannerClient.init();
     return handlerInput.responseBuilder
     .speak("5 Sekunden sind um").reprompt("Was möchest du?")
     .getResponse();
@@ -330,7 +90,7 @@ const AddPageIntentHandler = {
     clearState(handlerInput);
 
     // let isAbleToScan = await voiceScannerClient.isAbleToScan();
-    (function() {voiceScannerClient.addPage()})();
+    voiceScannerClient.addPage();
 
     return handlerInput.responseBuilder
     .speak(JSON.stringify("Scanne..."))
