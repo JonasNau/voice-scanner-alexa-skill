@@ -78,7 +78,6 @@ class VoiceScannerClient {
   }
 
   async addPage() {
-    return new Promise(async (resolve, reject) => {
       let response = await httpRequest({
         url: "/addPage",
         method: "post",
@@ -86,28 +85,6 @@ class VoiceScannerClient {
         body: false,
         params: false, //For Get Request
       });
-
-      if (response === false) {
-        this.currentResult = {
-          error: true,
-          message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut.",
-        };
-        resolve({
-          error: true,
-          message: "Ein Fehler ist aufgetreten. Bitte versuche es erneut.",
-        });
-        return;
-      }
-      if (response.error) {
-        this.currentResult = { error: true, message: response.message };
-        resolve({ error: true, message: response.message });
-        return;
-      }
-
-      this.currentResult = { error: false, message: response.message };
-      resolve({ error: false, message: response.message });
-      return;
-    });
   }
 
   async convertAndUpload(filename, extension) {
