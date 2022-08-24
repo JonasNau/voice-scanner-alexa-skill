@@ -110,8 +110,24 @@ const SavePagesIntentHandler = {
   async handle(handlerInput) {
     clearState(handlerInput);
 
+    const recognizeExtension = (extension => {
+      if (!extension) return "pdf";
+      let checkString = extension.replace(".", "").replace(" ", "");
+      let checkArray = checkString.split("");
+      let pdf = ["p", "d"];
+      let png = ["p", "n"];
+      let jpg = ["j", "p"];
+
+      if (pdf.every(currentChar => checkArray.includes(currentChar))) return "pdf";
+      if (png.every(currentChar => checkArray.includes(currentChar))) return "png";
+      if (jpg.every(currentChar => checkArray.includes(currentChar))) return "jpg";
+      return "pdf";
+    })
+
     const filename = Alexa.getSlotValue(handlerInput.requestEnvelope, "dateiname");
-    const extension = Alexa.getSlotValue(handlerInput.requestEnvelope, "dateierweiterung");
+    let extension = recognizeExtension(Alexa.getSlotValue(handlerInput.requestEnvelope, "dateierweiterung"));
+    
+    
 
     let result = await voiceScannerClient.convertAndUploadAsync(filename, extension);
     if (result.error) {
@@ -247,7 +263,7 @@ const SessionEndedRequestHandler = {
     const reason = handlerInput.requestEnvelope.request.reason;
     console.log("==== SESSION ENDED WITH REASON ======");
     console.log(reason); 
-    
+
     console.log(
       `~~~~ Session ended: ${JSON.stringify(handlerInput.requestEnvelope)}`
     );
