@@ -292,6 +292,7 @@ const LaunchRequestHandler = {
 
     //callDirectiveService(handlerInput, `v2 Willkommen beim Stimmen Scanner. Ich initialisiere den Scanner. ${audioFile}`);
     await timeout(5000);
+
     return handlerInput.responseBuilder
     .speak("5 Sekunden sind um")
     .getResponse();
@@ -509,7 +510,7 @@ const SessionEndedRequestHandler = {
 
 async function timeout(ms) {
   return new Promise(async (resolve, reject) => {
-    setTimeout(resolve(true), ms);
+    setTimeout(() => resolve(true), ms);
   })
 }
 
