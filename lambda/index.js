@@ -106,9 +106,6 @@ const SavePagesIntentHandler = {
     if ((Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest") && (Alexa.getIntentName(handlerInput.requestEnvelope) === "SavePagesIntent")) {
       return true;
     }
-   if ((handlerInput.attributesManager.getSessionAttributes().currentState === "SeiteHinzufuegen") && (Alexa.getIntentName(handlerInput.requestEnvelope) === "AMAZON.NoIntent")) {
-    return true;
-   }
   },
   async handle(handlerInput) {
     clearState(handlerInput);
@@ -133,7 +130,30 @@ const SavePagesIntentHandler = {
 };
 
 
-const AllIntentHandler = {
+
+ const AddPageNoIntentHandler = {
+  canHandle(handlerInput) {
+      if ((handlerInput.attributesManager.getSessionAttributes().currentState === "SeiteHinzufuegen") && (Alexa.getIntentName(handlerInput.requestEnvelope) === "AMAZON.NoIntent")) {
+        return true;
+       }
+       return false;
+  },
+  async handle(handlerInput) {
+    clearState(handlerInput);
+    const speakOutput = `Wenn du keine weitere Seite hinzufügen möchtest sage "speichern" Wenn du doch noch eine Seite hinzufügen möchtest sage "Seite hinzufügen"`;
+    setState(handlerInput, "SeiteHinzufuegen")
+    return (
+      handlerInput.responseBuilder
+        .speak(speakOutput)
+        .reprompt(speakOutput)
+        .getResponse()
+    );
+  },
+};
+
+
+
+const FallbackIntentHandler = {
   canHandle(handlerInput) {
     return (
       Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" || Alexa.getIntentName(handlerInput.requestEnvelope) === "AMAZON.FallbackIntent"
@@ -142,7 +162,6 @@ const AllIntentHandler = {
   async handle(handlerInput) {
     clearState(handlerInput);
     const speakOutput = `Das habe ich nicht verstanden. Du kannst sagen "seiteHinzufügen" oder "Hilfe". Was möchtest du?`;
-
     return (
       handlerInput.responseBuilder
         .speak(speakOutput)
@@ -190,31 +209,7 @@ const CancelAndStopIntentHandler = {
     return handlerInput.responseBuilder.speak(speakOutput).getResponse();
   },
 };
-//Nichts verstanden
-/* *
- * FallbackIntent triggers when a customer says something that doesn’t map to any intents in your skill
- * It must also be defined in the language model (if the locale supports it)
- * This handler can be safely added but will be ingnored in locales that do not support it yet
- * */
-const FallbackIntentHandler = {
-  canHandle(handlerInput) {
-    return false;
-    return (
-      Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" &&
-      Alexa.getIntentName(handlerInput.requestEnvelope) ===
-        "AMAZON.FallbackIntent"
-    );
-  },
-  handle(handlerInput) {
-    const speakOutput =
-      'Diesen Befehl kann "Stimmen Scanner" nicht verarbeiten. Falls du Hilfe brauchst, sage "Hilfe"';
 
-    return handlerInput.responseBuilder
-      .speak(speakOutput)
-      .reprompt(speakOutput)
-      .getResponse();
-  },
-};
 
 const HelloWorldIntentHandler = {
   canHandle(handlerInput) {
@@ -387,7 +382,8 @@ exports.handler = (event, context, callback) => {
       SessionEndedRequestHandler,
       AddPageIntentHandler,
       SavePagesIntentHandler,
-      AllIntentHandler
+      AddPageNoIntentHandler,
+      FallbackIntentHandler
     ).withApiClient(new Alexa.DefaultApiClient())
     .addErrorHandlers(ErrorHandler)
     .withCustomUserAgent("jonas/voice-scanner/v1.0")
