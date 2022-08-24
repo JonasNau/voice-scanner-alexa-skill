@@ -290,8 +290,9 @@ const LaunchRequestHandler = {
     //Initialisierte Voice Scanner
      let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/18s.mp3'/>`;
 
-    callDirectiveService(handlerInput, `v2 Willkommen beim Stimmen Scanner. Ich initialisiere den Scanner. ${audioFile}`);
     await timeout(5000);
+    callDirectiveService(handlerInput, `v2 Willkommen beim Stimmen Scanner. Ich initialisiere den Scanner. ${audioFile}`);
+    
 
     return handlerInput.responseBuilder
     .speak("5 Sekunden sind um")
