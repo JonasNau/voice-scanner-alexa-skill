@@ -249,7 +249,7 @@ class VoiceScannerClient {
   }
 
 }
-const voiceScannerClient = new VoiceScannerClient();
+const voiceScannerClient = false;
 
 
   
@@ -286,14 +286,15 @@ const LaunchRequestHandler = {
     );
   },
   async handle(handlerInput) {
+    voiceScannerClient = new VoiceScannerClient();
     clearState(handlerInput);
     //Initialisierte Voice Scanner
      let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/18s.mp3'/>`;
 
     await timeout(5000);
-    callDirectiveService(handlerInput, `v2 Willkommen beim Stimmen Scanner. Ich initialisiere den Scanner. ${audioFile}`);
+    //callDirectiveService(handlerInput, `v2 Willkommen beim Stimmen Scanner. Ich initialisiere den Scanner. ${audioFile}`);
     
-
+    await voiceScannerClient.init();
     return handlerInput.responseBuilder
     .speak("5 Sekunden sind um")
     .getResponse();
