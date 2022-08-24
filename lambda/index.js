@@ -249,7 +249,7 @@ class VoiceScannerClient {
   }
 
 }
-const voiceScannerClient = false;
+let voiceScannerClient = false;
 
 
   
