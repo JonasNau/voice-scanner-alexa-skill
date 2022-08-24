@@ -116,10 +116,12 @@ const SavePagesIntentHandler = {
       let checkArray = checkString.split("");
       let pdf = ["p", "d"];
       let png = ["p", "n"];
+      let png2 = ["b", "n"]
       let jpg = ["j", "p"];
 
       if (pdf.every(currentChar => {return checkArray.includes(currentChar);})) return "pdf";
       if (png.every(currentChar => {return checkArray.includes(currentChar);})) return "png";
+      if (png2.every(currentChar => {return checkArray.includes(currentChar);})) return "png";
       if (jpg.every(currentChar => {return checkArray.includes(currentChar);})) return "jpg";
       return "pdf";
     })
