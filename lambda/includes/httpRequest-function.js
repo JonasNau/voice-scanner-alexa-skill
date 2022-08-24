@@ -40,7 +40,7 @@ async function httpRequest(
             resolve({error: true, message: "Rückgabewert ist kein gültiges JSON. Versuche es erneut."});
           }
          
-        })
+        }).catch(error => console.error(error));
             
       })
   }
