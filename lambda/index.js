@@ -59,7 +59,7 @@ const LaunchRequestHandler = {
       .speak(speakOutput)
       .getResponse();
     } else {
-      let speakOutput = `${result.message} Du kannst beispielsweise sagen: "seiteHinzufügen" oder "Hilfe". Möchtest du eine Seite hinzufügen? <audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/30s.mp3'/>`;
+      let speakOutput = `${result.message} Du kannst beispielsweise sagen: "seiteHinzufügen" oder "Hilfe". Möchtest du eine Seite hinzufügen? <audio src='https://www.soundhelix.com//examples/mp3/SoundHelix-Song-1.mp3'/>`;
       setState(handlerInput, "SeiteHinzufuegen")
       return handlerInput.responseBuilder
       .speak(speakOutput)
