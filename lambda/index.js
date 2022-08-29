@@ -444,7 +444,7 @@ exports.handler = (event, context, callback) => {
       FallbackIntentHandler
     ).withApiClient(new Alexa.DefaultApiClient())
     .addErrorHandlers(ErrorHandler)
-    .addRequestInterceptors("LogRequestInterceptor")
+    .addRequestInterceptors(LogRequestInterceptor)
     .addResponseInterceptors(LogResponseInterceptor)
     .withCustomUserAgent("jonas/voice-scanner/v1.0")
     .lambda()(event, context, callback);
