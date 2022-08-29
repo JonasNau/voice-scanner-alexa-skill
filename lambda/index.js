@@ -69,8 +69,6 @@ const LaunchRequestHandler = {
   },
 };
 
-f
-
 const AddPageIntentHandler = {
   canHandle(handlerInput) {
     if ((Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest") && (Alexa.getIntentName(handlerInput.requestEnvelope) === "AddPageIntent")) {
