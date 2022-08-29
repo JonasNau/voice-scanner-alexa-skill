@@ -59,7 +59,7 @@ const LaunchRequestHandler = {
       .speak(speakOutput)
       .getResponse();
     } else {
-      let speakOutput = `${result.message} Du kannst beispielsweise sagen: "seiteHinzufügen" oder "Hilfe". Möchtest du eine Seite hinzufügen? <audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/18s.mp3'/>`;
+      let speakOutput = `${result.message} Du kannst beispielsweise sagen: "seiteHinzufügen" oder "Hilfe". Möchtest du eine Seite hinzufügen? <audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/30s.mp3'/>`;
       setState(handlerInput, "SeiteHinzufuegen")
       return handlerInput.responseBuilder
       .speak(speakOutput)
@@ -444,7 +444,7 @@ exports.handler = (event, context, callback) => {
       FallbackIntentHandler
     ).withApiClient(new Alexa.DefaultApiClient())
     .addErrorHandlers(ErrorHandler)
-    .addRequestInterceptors(LogRequestInterceptor)
+    .addRequestInterceptors("LogRequestInterceptor")
     .addResponseInterceptors(LogResponseInterceptor)
     .withCustomUserAgent("jonas/voice-scanner/v1.0")
     .lambda()(event, context, callback);
