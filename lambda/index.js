@@ -69,6 +69,7 @@ const LaunchRequestHandler = {
   },
 };
 
+f
 
 const AddPageIntentHandler = {
   canHandle(handlerInput) {
