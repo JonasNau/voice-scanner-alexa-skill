@@ -59,7 +59,7 @@ const LaunchRequestHandler = {
       .speak(speakOutput)
       .getResponse();
     } else {
-      let speakOutput = `${result.message} <audio src='https://eduquiz.ddns.net/weiteres/30s.mp3'/> Du kannst beispielsweise sagen: "seiteHinzufügen" oder "Hilfe". Möchtest du eine Seite hinzufügen?`;
+      let speakOutput = `${result.message} <audio src='https://v3.jovo.tech/audio/nf3ZAkyt-30s.mp3'/> Du kannst beispielsweise sagen: "seiteHinzufügen" oder "Hilfe". Möchtest du eine Seite hinzufügen?`;
       setState(handlerInput, "SeiteHinzufuegen")
       return handlerInput.responseBuilder
       .speak(speakOutput)
