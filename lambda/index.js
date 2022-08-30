@@ -49,7 +49,7 @@ const LaunchRequestHandler = {
   async handle(handlerInput) {
     clearState(handlerInput);
     //Initialisierte Voice Scanner
-     callDirectiveService(handlerInput, `Willkommen beim Stimmen Scanner. Ich initialisiere den Scanner.`);
+     callDirectiveService(handlerInput, `Willkommen beim Stimmen Scanner. <audio src="api.wuschelcloud.synology.me/voiceScanner/waitingMusic/30s.mp3"/> Ich initialisiere den Scanner.`);
     
     let result = await voiceScannerClient.init();
     if (result.error) {
