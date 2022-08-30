@@ -10,6 +10,7 @@ const Alexa = require("ask-sdk-core");
 //Custom Modules
 const axios = require('axios').default;
 const objectFunctions = require("./includes/object-functions");
+const Util = require("./util");
 const { voiceScannerClient } = require("./includes/voiceScannerClient")
 
 
@@ -69,6 +70,7 @@ const LaunchRequestHandler = {
 };
 
 
+
 const AddPageIntentHandler = {
   canHandle(handlerInput) {
     if ((Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest") && (Alexa.getIntentName(handlerInput.requestEnvelope) === "AddPageIntent")) {
@@ -88,7 +90,7 @@ const AddPageIntentHandler = {
       .speak(speakOutput)
       .getResponse();
     } else {
-      let audioFile = `<audio src="s3://dcbb5727-7e3c-40e8-9df9-9fa8c337e14c-us-east-1/Media/30s.mp3"/>`;
+      let audioFile = `<audio src="${Util.getS3PreSignedUrl("Media/30s.mp3")}"/>`;
       let speakOutput = `Eine Seite wird gescannt. Dies kann bis zu 30 Sekunden dauern. ${audioFile} Möchtest du eine weitere Seite hinzufügen?`; 
       setState(handlerInput, "SeiteHinzufuegen")
       return handlerInput.responseBuilder
