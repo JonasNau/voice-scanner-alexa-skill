@@ -88,7 +88,7 @@ const AddPageIntentHandler = {
       .speak(speakOutput)
       .getResponse();
     } else {
-      let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/30s.mp3'/>`;
+      let audioFile = `<audio src='https://wuschelcloud-test.ddns.net/voiceScanner/waitingMusic/30s.mp3'/>`;
       let speakOutput = `Eine Seite wird gescannt. Dies kann bis zu 30 Sekunden dauern. ${audioFile} Möchtest du eine weitere Seite hinzufügen?`; 
       setState(handlerInput, "SeiteHinzufuegen")
       return handlerInput.responseBuilder
