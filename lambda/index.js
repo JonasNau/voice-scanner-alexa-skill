@@ -49,7 +49,7 @@ const LaunchRequestHandler = {
   async handle(handlerInput) {
     clearState(handlerInput);
     //Initialisierte Voice Scanner
-     callDirectiveService(handlerInput, `Willkommen beim Stimmen Scanner. Ich initialisiere den Scanner. <audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/18s.mp3'/>`);
+     callDirectiveService(handlerInput, `Willkommen beim Stimmen Scanner. Ich initialisiere den Scanner.`);
     
     let result = await voiceScannerClient.init();
     if (result.error) {
@@ -59,7 +59,7 @@ const LaunchRequestHandler = {
       .getResponse();
     } else {
       let speakOutput = `${result.message} Du kannst beispielsweise sagen: "seiteHinzufügen" oder "Hilfe". Möchtest du eine Seite hinzufügen?`;
-      setState(handlerInput, "SeiteHinzufuegen")
+      setState(handlerInput, "SeiteHinzufuegen");
       return handlerInput.responseBuilder
       .speak(speakOutput)
       .reprompt(speakOutput)
