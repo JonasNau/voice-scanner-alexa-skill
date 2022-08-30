@@ -49,7 +49,7 @@ const LaunchRequestHandler = {
   async handle(handlerInput) {
     clearState(handlerInput);
     //Initialisierte Voice Scanner
-     callDirectiveService(handlerInput, `Willkommen beim Stimmen Scanner. <audio src="https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/30s.mp3"/> Ich initialisiere den Scanner.`);
+     callDirectiveService(handlerInput, `Willkommen beim Stimmen Scanner. Ich initialisiere den Scanner.`);
     
     let result = await voiceScannerClient.init();
     if (result.error) {
@@ -58,7 +58,7 @@ const LaunchRequestHandler = {
       .speak(speakOutput)
       .getResponse();
     } else {
-      let speakOutput = `${result.message} <audio src="https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/30s.mp3"/> Du kannst beispielsweise sagen: "seiteHinzufügen" oder "Hilfe". Möchtest du eine Seite hinzufügen?`;
+      let speakOutput = `${result.message} Du kannst beispielsweise sagen: "seiteHinzufügen" oder "Hilfe". Möchtest du eine Seite hinzufügen?`;
       setState(handlerInput, "SeiteHinzufuegen");
       return handlerInput.responseBuilder
       .speak(speakOutput)
@@ -88,7 +88,7 @@ const AddPageIntentHandler = {
       .speak(speakOutput)
       .getResponse();
     } else {
-      let audioFile = `<audio src="soundbank://soundlibrary/air/fire_extinguisher/fire_extinguisher_01"/>`;
+      let audioFile = `<audio src="s3://dcbb5727-7e3c-40e8-9df9-9fa8c337e14c-us-east-1/Media/30s.mp3"/>`;
       let speakOutput = `Eine Seite wird gescannt. Dies kann bis zu 30 Sekunden dauern. ${audioFile} Möchtest du eine weitere Seite hinzufügen?`; 
       setState(handlerInput, "SeiteHinzufuegen")
       return handlerInput.responseBuilder
