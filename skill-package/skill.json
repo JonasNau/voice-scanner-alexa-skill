@@ -1,48 +1,219 @@
 {
-  "manifest": {
-    "apis": {
-      "custom": {
-        "endpoint": {
-          "uri": "arn:aws:lambda:us-east-1:737238145820:function:dcbb5727-7e3c-40e8-9df9-9fa8c337e14c:Release_0"
-        },
-        "interfaces": [],
-        "regions": {
-          "NA": {
-            "endpoint": {
-              "uri": "arn:aws:lambda:us-east-1:737238145820:function:dcbb5727-7e3c-40e8-9df9-9fa8c337e14c:Release_0"
-            }
-          },
-          "EU": {
-            "endpoint": {
-              "uri": "arn:aws:lambda:eu-west-1:737238145820:function:dcbb5727-7e3c-40e8-9df9-9fa8c337e14c:Release_0"
-            }
-          },
-          "FE": {
-            "endpoint": {
-              "uri": "arn:aws:lambda:us-west-2:737238145820:function:dcbb5727-7e3c-40e8-9df9-9fa8c337e14c:Release_0"
-            }
-          }
-        }
-      }
-    },
-    "manifestVersion": "1.0",
-    "publishingInformation": {
-      "distributionCountries": [],
-      "isAvailableWorldwide": true,
-      "locales": {
-        "de-DE": {
-          "description": "Sample Full Description",
-          "examplePhrases": [
-            "Alexa öffne hallo welt",
-            "hallo",
-            "hilfe"
+  "interactionModel": {
+      "languageModel": {
+          "invocationName": "stimmen scanner",
+          "intents": [
+              {
+                  "name": "AMAZON.CancelIntent",
+                  "samples": []
+              },
+              {
+                  "name": "AMAZON.HelpIntent",
+                  "samples": []
+              },
+              {
+                  "name": "AMAZON.StopIntent",
+                  "samples": []
+              },
+              {
+                  "name": "HelloWorldIntent",
+                  "slots": [],
+                  "samples": [
+                      "hallo",
+                      "wie geht's dir",
+                      "sag hallo welt",
+                      "sag hallo"
+                  ]
+              },
+              {
+                  "name": "AMAZON.NavigateHomeIntent",
+                  "samples": []
+              },
+              {
+                  "name": "AMAZON.FallbackIntent",
+                  "samples": []
+              },
+              {
+                  "name": "AddPageIntent",
+                  "slots": [],
+                  "samples": [
+                      "scanne ein",
+                      "scanne",
+                      "beginne mit Scannen",
+                      "starte",
+                      "starte Scanner",
+                      "hinzufügen",
+                      "füge eine Seite hinzu",
+                      "Seiten hinzufügen",
+                      "Seite hinzufügen"
+                  ]
+              },
+              {
+                  "name": "SavePagesIntent",
+                  "slots": [
+                      {
+                          "name": "dateiname",
+                          "type": "AMAZON.SearchQuery",
+                          "samples": [
+                              "{dateiname}",
+                              "{dateiname} soll der Name der Datei sein.",
+                              "{dateiname} soll die Datei heißen",
+                              "Der Name der Datei soll {dateiname} sein",
+                              "Die Datei soll {dateiname} heißen"
+                          ]
+                      },
+                      {
+                          "name": "dateierweiterung",
+                          "type": "AMAZON.SearchQuery",
+                          "samples": [
+                              "{dateierweiterung}",
+                              "Die Dateierweiterung soll {dateierweiterung} sein",
+                              "Das Format soll {dateierweiterung} sein"
+                          ]
+                      }
+                  ],
+                  "samples": [
+                      "hochladen",
+                      "Datei hochladen",
+                      "Dateien hochladen",
+                      "speichern",
+                      "Seiten speichern"
+                  ]
+              },
+              {
+                  "name": "AMAZON.YesIntent",
+                  "samples": []
+              },
+              {
+                  "name": "AMAZON.NoIntent",
+                  "samples": []
+              },
+              {
+                  "name": "RestartIntent",
+                  "slots": [],
+                  "samples": [
+                      "von vorne beginnen",
+                      "von vorne",
+                      "neustarten"
+                  ]
+              },
+              {
+                  "name": "StatusIntent",
+                  "slots": [],
+                  "samples": [
+                      "Seitenanzahl",
+                      "Anzahl Seiten",
+                      "anzahl der Seiten",
+                      "Wie viele Seiten habe ich schon",
+                      "status",
+                      "Status des Scanners"
+                  ]
+              }
           ],
-          "keywords": [],
-          "name": "VoiceScanner",
-          "summary": "Sample Short Description"
-        }
+          "types": []
       },
-      "testingInstructions": "Sample Testing Instructions."
-    }
+      "dialog": {
+          "intents": [
+              {
+                  "name": "SavePagesIntent",
+                  "delegationStrategy": "ALWAYS",
+                  "confirmationRequired": false,
+                  "prompts": {},
+                  "slots": [
+                      {
+                          "name": "dateiname",
+                          "type": "AMAZON.SearchQuery",
+                          "confirmationRequired": true,
+                          "elicitationRequired": true,
+                          "prompts": {
+                              "confirmation": "Confirm.Slot.64662992120.1228437418401",
+                              "elicitation": "Elicit.Slot.64662992120.1228437418401"
+                          }
+                      },
+                      {
+                          "name": "dateierweiterung",
+                          "type": "AMAZON.SearchQuery",
+                          "confirmationRequired": true,
+                          "elicitationRequired": true,
+                          "prompts": {
+                              "confirmation": "Confirm.Slot.64662992120.77252149551",
+                              "elicitation": "Elicit.Slot.64662992120.77252149551"
+                          }
+                      }
+                  ]
+              }
+          ],
+          "delegationStrategy": "ALWAYS"
+      },
+      "prompts": [
+          {
+              "id": "Elicit.Slot.64662992120.1228437418401",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "Wie möchtest du die Datei nennen?"
+                  },
+                  {
+                      "type": "PlainText",
+                      "value": "Wie soll der Name der Datei sein?"
+                  },
+                  {
+                      "type": "PlainText",
+                      "value": "Wie soll die Datei heißen?"
+                  }
+              ]
+          },
+          {
+              "id": "Elicit.Slot.64662992120.77252149551",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "Welches Format sollen die Dateien haben?"
+                  },
+                  {
+                      "type": "PlainText",
+                      "value": "Welches Format sollen die Dateien haben, pdf, png, oder jpg?"
+                  }
+              ]
+          },
+          {
+              "id": "Confirm.Slot.64662992120.77252149551",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "Möchtest du, dass die Datei {dateiname} Punkt {dateierweiterung} heißt?"
+                  },
+                  {
+                      "type": "PlainText",
+                      "value": "Der Name der Datei soll also {dateiname} Punkt {dateierweiterung} sein?"
+                  },
+                  {
+                      "type": "PlainText",
+                      "value": "Die Datei soll also {dateiname} Punkt {dateierweiterung} heißen?"
+                  }
+              ]
+          },
+          {
+              "id": "Confirm.Slot.64662992120.1228437418401",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "Du möchtest die Datei also {dateiname} nennen?"
+                  },
+                  {
+                      "type": "PlainText",
+                      "value": "{dateiname} soll die Datei also heißen?"
+                  },
+                  {
+                      "type": "PlainText",
+                      "value": "Die Datei soll also {dateiname} heißen?"
+                  },
+                  {
+                      "type": "PlainText",
+                      "value": "Der Dateiname soll also {dateiname} sein?"
+                  }
+              ]
+          }
+      ]
   }
 }
