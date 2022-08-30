@@ -90,7 +90,7 @@ const AddPageIntentHandler = {
       .speak(speakOutput)
       .getResponse();
     } else {
-      let audioFile = `<audio src='${Util.getS3PreSignedUrl("Media/30s-converted.mp3").replace("&", "&amp;")}'/>`;
+      let audioFile = `<audio src="${Util.getS3PreSignedUrl("Media/30s-converted.mp3").replace(/&/g,'&amp;')}"/>`;
       let speakOutput = `Eine Seite wird gescannt. Dies kann bis zu 30 Sekunden dauern. ${audioFile} Möchtest du eine weitere Seite hinzufügen?`; 
       setState(handlerInput, "SeiteHinzufuegen")
       return handlerInput.responseBuilder
