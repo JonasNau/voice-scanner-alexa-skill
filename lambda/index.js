@@ -322,7 +322,7 @@ const SessionEndedRequestHandler = {
     console.log(reason); 
 
     console.log(
-      `~~~~ Session ended: ${JSON.stringify(handlerInput.requestEnvelope)}`
+      `~~~~ Session ended: ${JSON.stringify(handlerInput)}`
     );
     await voiceScannerClient.clear();
     clearState(handlerInput);
