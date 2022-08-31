@@ -280,7 +280,7 @@ const CancelAndStopIntentHandler = {
     await voiceScannerClient.clear();
     const speakOutput = "Tschau!";
 
-    return handlerInput.responseBuilder.speak(speakOutput).getResponse();
+    return handlerInput.responseBuilder.speak(speakOutput).withShouldEndSession(true).getResponse();
   },
 };
 
