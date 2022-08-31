@@ -144,7 +144,6 @@ const SavePagesIntentHandler = {
       let speakOutput = `Die Dateien wurden erfolgreich auf den Server bei Dateien/Dokumente/Scans/VoiceScanner hochgeladen. Wenn du noch ein Dokument einscannen möchtest, dann sage "starte stimmen scanner"`; 
       return handlerInput.responseBuilder
       .speak(speakOutput)
-      .getResponse();
     }
   },
 };
