@@ -137,13 +137,12 @@ const SavePagesIntentHandler = {
     if (result.error) {
       let speakOutput = `${result.message} Versuche es erneut.`;
       return handlerInput.responseBuilder
-      .speak(speakOutput)
-      .getResponse();
+      .speak(speakOutput).withShouldEndSession(true).getResponse();
     } else {
       //let audioFile = `<audio src='https://api.wuschelcloud.synology.me/voiceScanner/waitingMusic/18s.mp3'/>`;
       let speakOutput = `Die Dateien wurden erfolgreich auf den Server bei Dateien/Dokumente/Scans/VoiceScanner hochgeladen. Wenn du noch ein Dokument einscannen möchtest, dann sage "starte stimmen scanner"`; 
       return handlerInput.responseBuilder
-      .speak(speakOutput)
+      .speak(speakOutput).withShouldEndSession(true).getResponse()
     }
   },
 };
