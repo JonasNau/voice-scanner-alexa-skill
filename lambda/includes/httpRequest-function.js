@@ -19,7 +19,7 @@ async function httpRequest(
   
       
         const instance = axios.create({
-          baseURL: 'http://wuschelcloud.synology.me:3000/api/voiceScanner',
+          baseURL: 'https://api1.jonas-pc-doctor.com:3000/api/voiceScanner',
           timeout: 0,
           headers: {'auth-token': authToken},
         });
