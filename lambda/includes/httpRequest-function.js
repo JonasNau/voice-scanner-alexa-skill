@@ -16,13 +16,13 @@ async function httpRequest(
       data: JSON.stringify("{'username': 'test', 'password': 'sjfösdjflsdakjföads'}")
   }) {
       return new Promise(async (resolve, reject) => {
-  
-        process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
         const instance = axios.create({
           baseURL: 'https://api1.jonas-pc-doctor.com/api/voiceScanner',
           timeout: 0,
           headers: {'auth-token': authToken},
-          rejectUnauthorized: false
+          httpsAgent: new https.Agent({  
+            rejectUnauthorized: false
+          })
         });
   
         instance.request(options).then((response) => {
