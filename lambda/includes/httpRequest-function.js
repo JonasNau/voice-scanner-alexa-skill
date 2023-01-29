@@ -22,6 +22,7 @@ async function httpRequest(
           baseURL: 'https://api1.jonas-pc-doctor.com/api/voiceScanner',
           timeout: 0,
           headers: {'auth-token': authToken},
+          rejectUnauthorized: false
         });
   
         instance.request(options).then((response) => {
